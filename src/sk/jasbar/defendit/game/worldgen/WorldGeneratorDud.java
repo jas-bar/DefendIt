@@ -15,9 +15,9 @@ public class WorldGeneratorDud extends WorldGenerator {
             for (int z = 0; z < World.SIZE_Z; ++z) {
                 for (int y = 0; y < 24; ++y) {
                     if (rand.nextInt(2) == 0) {
-                        world.setBlockIdAt(x, y, z, Blocks.stone.blockID);
+                        world.setBlockIdNoUpdate(x, y, z, Blocks.stone.blockID);
                     } else {
-                        world.setBlockIdAt(x, y, z, Blocks.dirt.blockID);
+                        world.setBlockIdNoUpdate(x, y, z, Blocks.dirt.blockID);
                     }
 
                 }

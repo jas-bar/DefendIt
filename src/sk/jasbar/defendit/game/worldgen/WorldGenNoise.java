@@ -19,11 +19,11 @@ public class WorldGenNoise extends WorldGenerator {
             	if(noise > World.SIZE_Y) noise = 32.f;
                 for (int y = 0; y < noise; ++y) {
                     if (y < 10)
-                        world.setBlockIdAt(x, y, z, Blocks.stone.blockID);
+                        world.setBlockIdNoUpdate(x, y, z, Blocks.stone.blockID);
                     else if (y >= 10 && y < 24) {
-                        world.setBlockIdAt(x, y, z, Blocks.dirt.blockID);
+                        world.setBlockIdNoUpdate(x, y, z, Blocks.dirt.blockID);
                     } else
-                        world.setBlockIdAt(x, y, z, Blocks.air.blockID);
+                        world.setBlockIdNoUpdate(x, y, z, Blocks.air.blockID);
                 }
             }
         }

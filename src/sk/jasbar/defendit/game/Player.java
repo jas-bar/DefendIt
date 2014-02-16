@@ -5,6 +5,11 @@ import sk.jasbar.defendit.engine.render.ICameraCoordsProvider;
 public class Player implements ICameraCoordsProvider {
     private float x, y, z;
     private float rx, ry, rz;
+    private final World world;
+
+    public Player(World w) {
+        world = w;
+    }
 
     @Override
     public float getCamRX() {
@@ -66,6 +71,22 @@ public class Player implements ICameraCoordsProvider {
 
     public void setZ(float f) {
         z = f;
+    }
+
+    public float getX() {
+        return x;
+    }
+
+    public float getY() {
+        return y;
+    }
+
+    public float getZ() {
+        return z;
+    }
+
+    public World getWorld() {
+        return world;
     }
 
 }

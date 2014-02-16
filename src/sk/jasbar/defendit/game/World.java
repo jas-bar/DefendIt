@@ -16,20 +16,55 @@ public class World {
         return blocks[x][y][z];
     }
 
-    public void setBlockIdAt(int x, int y, int z, int id) {
+    public void setBlockIdNoUpdate(int x, int y, int z, byte id) {
         coordsCheck(x, y, z);
         blocks[x][y][z] = (byte) (id & 0xFF);
     }
-    
-    public void setVisibility(int x, int y,int z, boolean vis){
-    	visible[x][y][z] = vis;
+
+    public boolean isVisible(int x, int y, int z) {
+        coordsCheck(x, y, z);
+        return visible[x][y][z];
     }
-    
-    public boolean getVisibility(int x, int y,int z){
-    	return visible[x][y][z];
+
+    public void setVisible(int x, int y, int z, boolean vis) {
+        coordsCheck(x, y, z);
+        visible[x][y][z] = vis;
     }
 
     public void tick() {
 
+    }
+
+    public void setBlockIdUpdate(int x, int y, int z, byte blockID) {
+        coordsCheck(x, y, z);
+        blocks[x][y][z] = (byte) (blockID & 0xFF);
+        updateBlock(x, y, z);
+        updateBlock(Math.min(x + 1, World.SIZE_X - 1), y, z);
+        updateBlock(Math.max(x - 1, 0), y, z);
+        updateBlock(x, Math.min(y + 1, World.SIZE_Y - 1), z);
+        updateBlock(x, Math.max(y - 1, 0), z);
+        updateBlock(x, y, Math.min(z + 1, World.SIZE_Z - 1));
+        updateBlock(x, y, Math.max(z - 1, 0));
+
+    }
+
+    private void updateBlock(int x, int y, int z) {
+        visible[x][y][z] = blockRenders(x, y, z);
+    }
+
+    private boolean blockRenders(int x, int y, int z) {
+        return (Blocks.block(getBlockIdAt(x, y, z)).renders(this, x, y, z) && visibleTest(x, y, z));
+    }
+
+    private boolean visibleTest(int x, int y, int z) {
+        if (x > 1 && x < World.SIZE_X - 1 && y > 1 && y < World.SIZE_Y - 1 && z > 1 && z < World.SIZE_Z - 1) {
+            return (!Blocks.block(this.getBlockIdAt(x + 1, y, z)).renders(this, x + 1, y, z)
+                    || !Blocks.block(this.getBlockIdAt(x - 1, y, z)).renders(this, x - 1, y, z)
+                    || !Blocks.block(this.getBlockIdAt(x, y + 1, z)).renders(this, x, y + 1, z)
+                    || !Blocks.block(this.getBlockIdAt(x, y - 1, z)).renders(this, x, y - 1, z)
+                    || !Blocks.block(this.getBlockIdAt(x, y, z - 1)).renders(this, x, y, z - 1) || !Blocks.block(this.getBlockIdAt(x - 1, y, z + 1))
+                    .renders(this, x - 1, y, z + 1));
+        } else
+            return false;
     }
 }

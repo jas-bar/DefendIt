@@ -14,6 +14,19 @@ public class WorldRenderer implements IRenderable {
 
     public WorldRenderer(World world) {
         this.world = world;
+
+        for (int x = 0; x < World.SIZE_X; ++x) {
+            for (int z = 0; z < World.SIZE_Z; ++z) {
+                for (int y = 0; y < World.SIZE_Y; ++y) {
+                    world.setVisible(x, y, z, blockRenders(x,y,z));
+                }
+            }
+        }
+
+    }
+
+    private boolean blockRenders(int x, int y, int z) {
+        return (Blocks.block(world.getBlockIdAt(x, y, z)).renders(world, x, y, z) && visibleTest(x, y, z));
     }
 
     @Override
@@ -22,14 +35,14 @@ public class WorldRenderer implements IRenderable {
         int yBegin = (int) Math.max(0, -cam.getCamY() / BlockRenderer.BLOCK_SIZE - renderDistance / 2);
         int zBegin = (int) Math.max(0, -cam.getCamZ() / BlockRenderer.BLOCK_SIZE - renderDistance / 2);
 
-        int xEnd = (int) Math.min(xBegin + renderDistance, World.SIZE_X-1);
-        int yEnd = (int) Math.min(yBegin + renderDistance, World.SIZE_Y-1);
-        int zEnd = (int) Math.min(zBegin + renderDistance, World.SIZE_Z-1);
+        int xEnd = (int) Math.min(xBegin + renderDistance, World.SIZE_X - 1);
+        int yEnd = (int) Math.min(yBegin + renderDistance, World.SIZE_Y - 1);
+        int zEnd = (int) Math.min(zBegin + renderDistance, World.SIZE_Z - 1);
 
         for (int x = xBegin; x < xEnd; ++x) {
             for (int z = zBegin; z < zEnd; ++z) {
                 for (int y = yBegin; y < yEnd; ++y) {
-                    if (Blocks.block(world.getBlockIdAt(x, y, z)).renders(world, x, y, z) && visibleTest(x, y, z)) {
+                    if (world.isVisible(x, y, z)) {
                         BlockRenderer renderer = BlockRendererRegistry.instance.getRenderer(world.getBlockIdAt(x, y, z));
                         renderer.renderBlock(world, x, y, z);
                     }
@@ -37,6 +50,7 @@ public class WorldRenderer implements IRenderable {
             }
         }
     }
+
     private boolean visibleTest(int x, int y, int z) {
         if (x > 1 && x < World.SIZE_X - 1 && y > 1 && y < World.SIZE_Y - 1 && z > 1 && z < World.SIZE_Z - 1) {
             return (!Blocks.block(world.getBlockIdAt(x + 1, y, z)).renders(world, x + 1, y, z)

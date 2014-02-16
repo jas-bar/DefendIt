@@ -18,7 +18,7 @@ public class WorldGenJas extends WorldGenerator {
             for(int x = xx;x<xx+5;++x){
                 for(int y = yy;y<yy+5;++y){
                     for(int z = zz;z<zz+5;++z){
-                        world.setBlockIdAt(x, y, z, Blocks.stone.blockID);
+                        world.setBlockIdNoUpdate(x, y, z, Blocks.stone.blockID);
                     }
                 }
             }
