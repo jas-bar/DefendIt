@@ -14,7 +14,7 @@ public class FullBlockRenderer extends BlockRenderer {
 
     @Override
     public void renderBlock(World world, int x, int y, int z) {
-        float renderX = x * BLOCK_SIZE;
+        /*float renderX = x * BLOCK_SIZE;
         float renderY = y * BLOCK_SIZE;
         float renderZ = z * BLOCK_SIZE;
 
@@ -34,7 +34,7 @@ public class FullBlockRenderer extends BlockRenderer {
         if (y > world.SIZE_Y - 1 || !Blocks.block(world.getBlockIdAt(x, y + 1, z)).renders(world, x, y + 1, z))
             Renderer.renderUpFace(renderX, renderY, renderZ, BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE);
         if (y < 1 || !Blocks.block(world.getBlockIdAt(x, y - 1, z)).renders(world, x, y - 1, z))
-            Renderer.renderDownFace(renderX, renderY, renderZ, BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE);
+            Renderer.renderDownFace(renderX, renderY, renderZ, BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE);*/
     }
 
 }

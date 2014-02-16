@@ -22,7 +22,7 @@ public class LightingRenderable implements IRenderable {
 	public void render(DefendItGame defendItGame,
 			ICameraCoordsProvider camCoords) {
 		
-		lightPos0.put(new float[] { -camCoords.getCamX(), -camCoords.getCamY(), -camCoords.getCamZ(), 1.f });
+		lightPos0.put(new float[] { -camCoords.getCamX(), -camCoords.getCamY()+100, -camCoords.getCamZ(), 1.f });
 		lightPos0.flip();
 		
 		glLight(GL_LIGHT0, GL_POSITION, lightPos0);

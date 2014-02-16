@@ -9,7 +9,7 @@ import sk.jasbar.defendit.game.Player;
 
 public class PlayerMovementUpdateable implements IUpdateable {
 
-    private static final float CAMERA_STEP = 100f;
+    private static final float CAMERA_STEP = 10f;
     private final Player player;
 
     public PlayerMovementUpdateable(Player player) {

@@ -14,80 +14,86 @@ public class Renderer {
 		glColor3f(r, g, b);
 	}
 
-	public static void renderBackFace(float x, float y, float z, float w,
+	public static void renderBackFace(Texture texture, float x, float y, float z, float w,
 			float h, float d) {
+		texture.bind();
 		glBegin(GL_QUADS);
 		{
-			glNormal3d(0.f, 0.f, -1.f);//TODO: normaly
-			glVertex3d(x, y + h, z);
-			glVertex3d(x + w, y + h, z);
-			glVertex3d(x + w, y, z);
-			glVertex3d(x, y, z);
+			glNormal3d(0.f, 0.f, -1.f);
+			glTexCoord2f(0,1);glVertex3d(x, y + h, z);
+			glTexCoord2f(1,1);glVertex3d(x + w, y + h, z);
+			glTexCoord2f(1,0);glVertex3d(x + w, y, z);
+			glTexCoord2f(0,0);glVertex3d(x, y, z);
 		}
 		glEnd();
 	}
 
-	public static void renderFrontFace(float x, float y, float z, float w,
+	public static void renderFrontFace(Texture texture,float x, float y, float z, float w,
 			float h, float d) {
+		texture.bind();
 		glBegin(GL_QUADS);
 		{
 			glNormal3d(0.f, 0.f, 1.f);
-			glVertex3d(x, y, z + d);
-			glVertex3d(x + w, y, z + d);
-			glVertex3d(x + w, y + h, z + d);
-			glVertex3d(x, y + h, z + d);
+			glTexCoord2f(0,0);glVertex3d(x, y, z + d);
+			glTexCoord2f(1,0);glVertex3d(x + w, y, z + d);
+			glTexCoord2f(1,1);glVertex3d(x + w, y + h, z + d);
+			glTexCoord2f(0,1);glVertex3d(x, y + h, z + d);
 		}
 		glEnd();
 	}
 
-	public static void renderRightFace(float x, float y, float z, float w,
+	public static void renderRightFace(Texture texture,float x, float y, float z, float w,
 			float h, float d) {
+		texture.bind();
 		glBegin(GL_QUADS);
 		{
 			glNormal3d(1.f, 0.f, 0.f);
-			glVertex3d(x + w, y + h, z);
-			glVertex3d(x + w, y + h, z + d);
-			glVertex3d(x + w, y, z + d);
-			glVertex3d(x + w, y, z);
+			glTexCoord2f(0,1);glVertex3d(x + w, y + h, z);
+			glTexCoord2f(1,1);glVertex3d(x + w, y + h, z + d);
+			glTexCoord2f(1,0);glVertex3d(x + w, y, z + d);
+			glTexCoord2f(0,0);glVertex3d(x + w, y, z);
 		}
 		glEnd();
 	}
 
-	public static void renderLeftFace(float x, float y, float z, float w,
+	public static void renderLeftFace(Texture texture,float x, float y, float z, float w,
 			float h, float d) {
+		texture.bind();
 		glBegin(GL_QUADS);
 		{
 			glNormal3d(-1.f, 0.f, 0.f);
-			glVertex3d(x, y, z);
-			glVertex3d(x, y, z + d);
-			glVertex3d(x, y + h, z + d);
-			glVertex3d(x, y + h, z);
+			glTexCoord2f(0,0);glVertex3d(x, y, z);
+			glTexCoord2f(0,1);glVertex3d(x, y, z + d);
+			glTexCoord2f(1,1);glVertex3d(x, y + h, z + d);
+			glTexCoord2f(1,0);glVertex3d(x, y + h, z);
 		}
 		glEnd();
 	}
 
-	public static void renderUpFace(float x, float y, float z, float w,
+	public static void renderUpFace(Texture texture,float x, float y, float z, float w,
 			float h, float d) {
+		texture.bind();
 		glBegin(GL_QUADS);
 		{
 			glNormal3d(0.f, 1.f, 0.f);
-			glVertex3d(x, y + h, z);
-			glVertex3d(x, y + h, z + d);
-			glVertex3d(x + w, y + h, z + d);
-			glVertex3d(x + w, y + h, z);
+			glTexCoord2f(0,0);glVertex3d(x, y + h, z);
+			glTexCoord2f(0,1);glVertex3d(x, y + h, z + d);
+			glTexCoord2f(1,1);glVertex3d(x + w, y + h, z + d);
+			glTexCoord2f(1,0);glVertex3d(x + w, y + h, z);
 		}
 		glEnd();
 	}
 
-	public static void renderDownFace(float x, float y, float z, float w,
+	public static void renderDownFace(Texture texture,float x, float y, float z, float w,
 			float h, float d) {
+		texture.bind();
 		glBegin(GL_QUADS);
 		{
 			glNormal3d(0.f, -1.f, 0.f);
-			glVertex3d(x + w, y, z);
-			glVertex3d(x + w, y, z + d);
-			glVertex3d(x, y, z + d);
-			glVertex3d(x, y, z);
+			glTexCoord2f(1,0);glVertex3d(x + w, y, z);
+			glTexCoord2f(1,1);glVertex3d(x + w, y, z + d);
+			glTexCoord2f(0,1);glVertex3d(x, y, z + d);
+			glTexCoord2f(0,0);glVertex3d(x, y, z);
 		}
 		glEnd();
 	}

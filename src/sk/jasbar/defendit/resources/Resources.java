@@ -67,8 +67,9 @@ public class Resources {
     private String createResourceKeyForFile(File file) {
         String filePath = file.getPath();
         filePath = filePath.replace("*" + File.separator + "res" + File.separator, "");
+        filePath = filePath.replaceFirst("res.", "");
         if (filePath.contains(".")) {
-            String[] split = filePath.split("\\\\.");
+            String[] split = filePath.split("\\.");
             String ext = split[split.length - 1];
             filePath = filePath.replace(".".concat(ext), "");
         }
