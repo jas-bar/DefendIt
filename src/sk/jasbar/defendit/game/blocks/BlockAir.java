@@ -9,7 +9,6 @@ import sk.jasbar.defendit.render.TexturedBlockRenderer;
 public class BlockAir extends Block {
     public BlockAir() {
         super();
-        BlockRendererRegistry.instance.registerRenderer(blockID, new TexturedBlockRenderer(this, "textures.dirt"));
     }
 
     @Override

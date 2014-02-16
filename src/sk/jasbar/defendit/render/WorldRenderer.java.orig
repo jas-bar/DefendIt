@@ -18,9 +18,9 @@ public class WorldRenderer implements IRenderable {
 
     @Override
     public void render(DefendItGame game, ICameraCoordsProvider cam) {
-        int xBegin = (int) Math.max(0, cam.getCamX() / BlockRenderer.BLOCK_SIZE - renderDistance / 2);
-        int yBegin = (int) Math.max(0, cam.getCamY() / BlockRenderer.BLOCK_SIZE - renderDistance / 2);
-        int zBegin = (int) Math.max(0, cam.getCamZ() / BlockRenderer.BLOCK_SIZE - renderDistance / 2);
+        int xBegin = (int) Math.max(0, -cam.getCamX() / BlockRenderer.BLOCK_SIZE - renderDistance / 2);
+        int yBegin = (int) Math.max(0, -cam.getCamY() / BlockRenderer.BLOCK_SIZE - renderDistance / 2);
+        int zBegin = (int) Math.max(0, -cam.getCamZ() / BlockRenderer.BLOCK_SIZE - renderDistance / 2);
 
         int xEnd = (int) Math.min(xBegin + renderDistance, World.SIZE_X-1);
         int yEnd = (int) Math.min(yBegin + renderDistance, World.SIZE_Y-1);
@@ -29,7 +29,7 @@ public class WorldRenderer implements IRenderable {
         for (int x = xBegin; x < xEnd; ++x) {
             for (int z = zBegin; z < zEnd; ++z) {
                 for (int y = yBegin; y < yEnd; ++y) {
-                    if (Blocks.block(world.getBlockIdAt(x, y, z)).renders(world, x, y, z)) {
+                    if (Blocks.block(world.getBlockIdAt(x, y, z)).renders(world, x, y, z) && visibleTest(x, y, z)) {
                         BlockRenderer renderer = BlockRendererRegistry.instance.getRenderer(world.getBlockIdAt(x, y, z));
                         renderer.renderBlock(world, x, y, z);
                     }
@@ -37,7 +37,6 @@ public class WorldRenderer implements IRenderable {
             }
         }
     }
-
     private boolean visibleTest(int x, int y, int z) {
         if (x > 1 && x < World.SIZE_X - 1 && y > 1 && y < World.SIZE_Y - 1 && z > 1 && z < World.SIZE_Z - 1) {
             return (!Blocks.block(world.getBlockIdAt(x + 1, y, z)).renders(world, x + 1, y, z)
