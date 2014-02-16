@@ -10,7 +10,7 @@ public class WorldRenderer implements IRenderable {
 	private final World world;
 	// 1000 = far clipping plane. Dalej nema vyznam renderovat, kedze to OpenGL
 	// aj tak odsekne...
-	private static final int renderDistance = (int) (100);
+	private static final int renderDistance = (int) (200);
 
 	public WorldRenderer(World world) {
 		this.world = world;
@@ -18,7 +18,12 @@ public class WorldRenderer implements IRenderable {
 		for (int x = 0; x < World.SIZE_X; ++x) {
 			for (int z = 0; z < World.SIZE_Z; ++z) {
 				for (int y = 0; y < World.SIZE_Y; ++y) {
-					world.setVisibility(x, y, z, visibleTest(x,y,z));
+					world.setVisibility(
+							x,
+							y,
+							z,
+							(Blocks.block(world.getBlockIdAt(x, y, z)).renders(
+									world, x, y, z) && visibleTest(x, y, z)));
 				}
 			}
 		}
@@ -41,8 +46,7 @@ public class WorldRenderer implements IRenderable {
 		for (int x = xBegin; x < xEnd; ++x) {
 			for (int z = zBegin; z < zEnd; ++z) {
 				for (int y = yBegin; y < yEnd; ++y) {
-					if (Blocks.block(world.getBlockIdAt(x, y, z)).renders(
-							world, x, y, z) && world.getVisibility(x, y, z)) {
+					if (world.getVisibility(x, y, z)) {
 						BlockRenderer renderer = BlockRendererRegistry.instance
 								.getRenderer(world.getBlockIdAt(x, y, z));
 						renderer.renderBlock(world, x, y, z);

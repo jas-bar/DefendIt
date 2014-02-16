@@ -38,8 +38,8 @@ public class DefendItGame extends Game {
 
     private void generateWorld() {
         WorldGeneratorMain gen = new WorldGeneratorMain();
-/*        gen.addModule(new WorldGeneratorDud());
-        gen.addModule(new WorldGenJas());*/
+        //gen.addModule(new WorldGeneratorDud());
+        gen.addModule(new WorldGenJas());
         gen.addModule(new WorldGenNoise());
         gen.generate(world);
     }
@@ -54,7 +54,7 @@ public class DefendItGame extends Game {
         }
         world = new World();
         player = new Player();
-        cam = new AbstractCamera(player, settings.getDisplayWidth() / settings.getDisplayHeight(), 70, 0.3f, 5000f);
+        cam = new AbstractCamera(player, settings.getDisplayWidth() / settings.getDisplayHeight(), 70, 0.3f, 100000f);
         updateables.add(new PlayerMovementUpdateable(player));
         if (settings.isShowFPS())
             updateables.add(new ShowFPS());

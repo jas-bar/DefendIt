@@ -25,7 +25,11 @@ public class AbstractCamera {
         glLoadIdentity();
         GLU.gluPerspective(fov, aspectRatio, nearClip, farClip);
         glMatrixMode(GL_MODELVIEW);
+        glEnable(GL_TEXTURE_2D);
+        glTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
         glEnable(GL_DEPTH_TEST);
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+        glEnable(GL_BLEND);
     }
     
     private void initLight(){
