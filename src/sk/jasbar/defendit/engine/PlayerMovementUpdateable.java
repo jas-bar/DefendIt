@@ -51,7 +51,7 @@ public class PlayerMovementUpdateable implements IUpdateable {
             Mouse.setGrabbed(!Mouse.isGrabbed());
         }
         if(Math.round(player.getX()/BlockRenderer.BLOCK_SIZE) > 0 && Math.round(player.getX()/BlockRenderer.BLOCK_SIZE) < World.SIZE_X && Math.round(player.getY()/BlockRenderer.BLOCK_SIZE) > 0 && Math.round(player.getY()/BlockRenderer.BLOCK_SIZE)< World.SIZE_Y && Math.round(player.getZ()/BlockRenderer.BLOCK_SIZE)>0 && Math.round(player.getZ()/BlockRenderer.BLOCK_SIZE) < World.SIZE_Z)
-            player.getWorld().setBlockIdUpdate(Math.round(player.getX()/BlockRenderer.BLOCK_SIZE), Math.round(player.getY()/BlockRenderer.BLOCK_SIZE), Math.round(player.getZ()/BlockRenderer.BLOCK_SIZE), Blocks.air.blockID);
+            player.getWorld().setBlockId(Math.round(player.getX()/BlockRenderer.BLOCK_SIZE), Math.round(player.getY()/BlockRenderer.BLOCK_SIZE), Math.round(player.getZ()/BlockRenderer.BLOCK_SIZE), Blocks.air.blockID);
         
         
     }

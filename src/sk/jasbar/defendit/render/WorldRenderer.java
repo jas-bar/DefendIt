@@ -18,7 +18,7 @@ public class WorldRenderer implements IRenderable {
         for (int x = 0; x < World.SIZE_X; ++x) {
             for (int z = 0; z < World.SIZE_Z; ++z) {
                 for (int y = 0; y < World.SIZE_Y; ++y) {
-                    world.setVisible(x, y, z, blockRenders(x,y,z));
+                    world.setVisible(x, y, z, blockRenders(x, y, z));
                 }
             }
         }
@@ -26,7 +26,7 @@ public class WorldRenderer implements IRenderable {
     }
 
     private boolean blockRenders(int x, int y, int z) {
-        return (Blocks.block(world.getBlockIdAt(x, y, z)).renders(world, x, y, z) && visibleTest(x, y, z));
+        return (Blocks.block(world.getBlockIdAt(x, y, z)).renders(world, x, y, z) && world.visibleTest(x, y, z));
     }
 
     @Override
@@ -51,15 +51,4 @@ public class WorldRenderer implements IRenderable {
         }
     }
 
-    private boolean visibleTest(int x, int y, int z) {
-        if (x > 1 && x < World.SIZE_X - 1 && y > 1 && y < World.SIZE_Y - 1 && z > 1 && z < World.SIZE_Z - 1) {
-            return (!Blocks.block(world.getBlockIdAt(x + 1, y, z)).renders(world, x + 1, y, z)
-                    || !Blocks.block(world.getBlockIdAt(x - 1, y, z)).renders(world, x - 1, y, z)
-                    || !Blocks.block(world.getBlockIdAt(x, y + 1, z)).renders(world, x, y + 1, z)
-                    || !Blocks.block(world.getBlockIdAt(x, y - 1, z)).renders(world, x, y - 1, z)
-                    || !Blocks.block(world.getBlockIdAt(x, y, z - 1)).renders(world, x, y, z - 1) || !Blocks.block(
-                    world.getBlockIdAt(x - 1, y, z + 1)).renders(world, x - 1, y, z + 1));
-        } else
-            return false;
-    }
 }

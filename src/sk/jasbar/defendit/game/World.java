@@ -35,9 +35,8 @@ public class World {
 
     }
 
-    public void setBlockIdUpdate(int x, int y, int z, byte blockID) {
-        coordsCheck(x, y, z);
-        blocks[x][y][z] = (byte) (blockID & 0xFF);
+    public void setBlockId(int x, int y, int z, byte blockID) {
+        setBlockIdNoUpdate(x, y, z, blockID);
         updateBlock(x, y, z);
         updateBlock(Math.min(x + 1, World.SIZE_X - 1), y, z);
         updateBlock(Math.max(x - 1, 0), y, z);
@@ -53,17 +52,17 @@ public class World {
     }
 
     private boolean blockRenders(int x, int y, int z) {
-        return (Blocks.block(getBlockIdAt(x, y, z)).renders(this, x, y, z) && visibleTest(x, y, z));
+        return Blocks.block(getBlockIdAt(x, y, z)).renders(this, x, y, z) && visibleTest(x, y, z);
     }
 
-    private boolean visibleTest(int x, int y, int z) {
+    public boolean visibleTest(int x, int y, int z) {
         if (x > 1 && x < World.SIZE_X - 1 && y > 1 && y < World.SIZE_Y - 1 && z > 1 && z < World.SIZE_Z - 1) {
-            return (!Blocks.block(this.getBlockIdAt(x + 1, y, z)).renders(this, x + 1, y, z)
-                    || !Blocks.block(this.getBlockIdAt(x - 1, y, z)).renders(this, x - 1, y, z)
-                    || !Blocks.block(this.getBlockIdAt(x, y + 1, z)).renders(this, x, y + 1, z)
-                    || !Blocks.block(this.getBlockIdAt(x, y - 1, z)).renders(this, x, y - 1, z)
-                    || !Blocks.block(this.getBlockIdAt(x, y, z - 1)).renders(this, x, y, z - 1) || !Blocks.block(this.getBlockIdAt(x - 1, y, z + 1))
-                    .renders(this, x - 1, y, z + 1));
+            return (!Blocks.block(getBlockIdAt(x + 1, y, z)).renders(this, x + 1, y, z)
+                    || !Blocks.block(getBlockIdAt(x - 1, y, z)).renders(this, x - 1, y, z)
+                    || !Blocks.block(getBlockIdAt(x, y + 1, z)).renders(this, x, y + 1, z)
+                    || !Blocks.block(getBlockIdAt(x, y - 1, z)).renders(this, x, y - 1, z)
+                    || !Blocks.block(getBlockIdAt(x, y, z - 1)).renders(this, x, y, z - 1) 
+                    || !Blocks.block(getBlockIdAt(x, y, z + 1)).renders(this,x, y, z + 1));
         } else
             return false;
     }
