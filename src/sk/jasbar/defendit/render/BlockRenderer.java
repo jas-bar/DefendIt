@@ -11,5 +11,5 @@ public abstract class BlockRenderer {
         BlockRendererRegistry.instance.registerRenderer(block.blockID, this);
     }
 
-    public abstract void renderBlock(World world, int x, int y, int z);
+    public abstract void renderBlock(IBlockRenderTarget target,World world, int x, int y, int z);
 }

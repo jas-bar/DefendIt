@@ -6,7 +6,6 @@ import org.lwjgl.BufferUtils;
 
 import sk.jasbar.defendit.DefendItGame;
 import sk.jasbar.defendit.engine.IRenderable;
-import sk.tomsik68.gamedev.engine3d.Renderer;
 import static org.lwjgl.opengl.GL11.*;
 
 public class LightingRenderable implements IRenderable {

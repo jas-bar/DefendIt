@@ -1,8 +1,8 @@
 package sk.jasbar.defendit.render;
 
+import sk.jasbar.defendit.engine.render.Renderer;
 import sk.jasbar.defendit.game.Block;
 import sk.jasbar.defendit.game.World;
-import sk.tomsik68.gamedev.engine3d.Renderer;
 
 public class ColorBlockRenderer extends FullBlockRenderer {
     private final float r, g, b;
@@ -15,9 +15,9 @@ public class ColorBlockRenderer extends FullBlockRenderer {
     }
 
     @Override
-    public void renderBlock(World world, int x, int y, int z) {
+    public void renderBlock(IBlockRenderTarget target, World world, int x, int y, int z) {
         Renderer.setColor(r, g, b);
-        super.renderBlock(world, x, y, z);
+        super.renderBlock(target,world, x, y, z);
     }
 
 }

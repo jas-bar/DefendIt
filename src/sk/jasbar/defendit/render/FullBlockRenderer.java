@@ -3,7 +3,6 @@ package sk.jasbar.defendit.render;
 import sk.jasbar.defendit.game.Block;
 import sk.jasbar.defendit.game.Blocks;
 import sk.jasbar.defendit.game.World;
-import sk.tomsik68.gamedev.engine3d.Renderer;
 
 public class FullBlockRenderer extends BlockRenderer {
 
@@ -13,7 +12,7 @@ public class FullBlockRenderer extends BlockRenderer {
     }
 
     @Override
-    public void renderBlock(World world, int x, int y, int z) {
+    public void renderBlock(IBlockRenderTarget target, World world, int x, int y, int z) {
         /*float renderX = x * BLOCK_SIZE;
         float renderY = y * BLOCK_SIZE;
         float renderZ = z * BLOCK_SIZE;
