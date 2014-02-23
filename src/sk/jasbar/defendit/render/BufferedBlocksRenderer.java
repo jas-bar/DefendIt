@@ -12,54 +12,49 @@ public class BufferedBlocksRenderer extends BufferedRenderer implements IBlockRe
 
     @Override
     public void renderBackFace(World world, float x, float y, float z) {
-        addVertex(x,y+B,z);
-        addVertex(x+B, y+B, z);
-        addVertex(x+B,y,z);
-        addVertex(x, y, z);
+    	addNormal(0,0,-1);addVertex(x,y+B,z);
+    	addNormal(0,0,-1);addVertex(x+B, y+B, z);
+    	addNormal(0,0,-1);addVertex(x+B,y,z);
+    	addNormal(0,0,-1);addVertex(x, y, z);
     }
-    // TODO: skrecok
     @Override
     public void renderFrontFace(World world, float x, float y, float z) {
-        /*vertices.put(x).put(y).put(z + d);
-        vertices.put(x + w).put(y).put(z + d);
-        vertices.put(x + w).put(y + h).put(z + d);
-        vertices.put(x).put(y + h).put(z + d);*/
+    	addNormal(0,0,1);addVertex(x,y,z+B);
+    	addNormal(0,0,1);addVertex(x+B, y, z+B);
+    	addNormal(0,0,1);addVertex(x+B,y+B,z+B);
+    	addNormal(0,0,1);addVertex(x, y+B, z+B);
     }
 
     @Override
     public void renderLeftFace(World world, float x, float y, float z) {
-        /*vertices.put(x).put(y).put(z);
-        vertices.put(x).put(y).put(z + d);
-        vertices.put(x).put(y + h).put(z + d);
-        vertices.put(x).put(y + h).put(z);*/
+    	addNormal(-1,0,0);addVertex(x,y,z);
+    	addNormal(-1,0,0);addVertex(x, y, z+B);
+    	addNormal(-1,0,0);addVertex(x,y+B,z+B);
+    	addNormal(-1,0,0);addVertex(x, y+B, z);
     }
 
     @Override
-    public void renderRightFace(World world, float x, float y, float z) {
-        /*vertices.put(x + w).put(y + h).put(z);
-        vertices.put(x + w).put(y + h).put(z + d);
-        vertices.put(x + w).put(y).put(z + d);
-        vertices.put(x + w).put(y).put(z);*/
+    public void renderRightFace(World world, float x, float y, float z) {  	
+    	addNormal(1,0,0);addVertex(x+B,y+B,z);
+    	addNormal(1,0,0);addVertex(x+B, y+B, z+B);
+    	addNormal(1,0,0);addVertex(x+B,y,z+B);
+    	addNormal(1,0,0);addVertex(x+B, y, z);
     }
 
     @Override
     public void renderUpFace(World world, float x, float y, float z) {
-        /*vertices.put(x).put(y + h).put(z);
-        vertices.put(x).put(y + h).put(z + d);
-        vertices.put(x + w).put(y + h).put(z + d);
-        vertices.put(x + w).put(y + h).put(z);*/
-        addVertex(x, y+B, z);
-        addVertex(x, y+B, z+B);
-        addVertex(x+B, y+B, z+B);
-        addVertex(x+B, y+B, z);
+    	addNormal(0,1,0);addVertex(x, y+B, z);
+    	addNormal(0,1,0);addVertex(x, y+B, z+B);
+    	addNormal(0,1,0);addVertex(x+B, y+B, z+B);
+    	addNormal(0,1,0);addVertex(x+B, y+B, z);
     }
 
     @Override
     public void renderDownFace(World world, float x, float y, float z) {
-        /*vertices.put(x + w).put(y).put(z);
-        vertices.put(x + w).put(y).put(z + d);
-        vertices.put(x).put(y).put(z + d);
-        vertices.put(x).put(y).put(z);*/
+    	addNormal(0,-1,0);addVertex(x+B, y, z);
+    	addNormal(0,-1,0);addVertex(x+B, y, z+B);
+    	addNormal(0,-1,0);addVertex(x, y, z+B);
+    	addNormal(0,-1,0);addVertex(x, y, z);
     }
 
 }

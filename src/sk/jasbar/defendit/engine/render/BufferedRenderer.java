@@ -10,7 +10,8 @@ import org.lwjgl.BufferUtils;
 import sk.jasbar.defendit.render.WorldRenderer;
 
 public class BufferedRenderer {
-    private static final int BUFFER_SIZE = WorldRenderer.renderDistance * WorldRenderer.renderDistance * 32 / 2 * 6 * 4;
+	private static final int BUFFER_SIZE = 0x2000000;
+    //private static final int BUFFER_SIZE = WorldRenderer.renderDistance * WorldRenderer.renderDistance * 32 / 2 * 6 * 4;
     private static final int VERTEX_SIZE = 3;
 
     private final FloatBuffer vertices;
@@ -82,20 +83,20 @@ public class BufferedRenderer {
         glBindBuffer(GL_ARRAY_BUFFER, vertexPointer);
         glVertexPointer(VERTEX_SIZE, GL_FLOAT, 0, 0);
 
+        glBindBuffer(GL_ARRAY_BUFFER, texturePointer);
+        glTexCoordPointer(2, GL_FLOAT, 0, 0);
+        
         glBindBuffer(GL_ARRAY_BUFFER, normalPointer);
         glNormalPointer(GL_FLOAT, 0, 0);
 
-        glBindBuffer(GL_ARRAY_BUFFER, texturePointer);
-        glTexCoordPointer(2, GL_FLOAT, 0, 0);
-
-        glEnableClientState(GL_VERTEX_ARRAY);
+        glEnableClientState(GL_VERTEX_ARRAY); 
         glEnableClientState(GL_TEXTURE_COORD_ARRAY);
         glEnableClientState(GL_NORMAL_ARRAY);
-
+        
         glDrawArrays(vertexesMode, 0, count * 3);
 
         glDisableClientState(GL_NORMAL_ARRAY);
-        glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+        glDisableClientState(GL_TEXTURE_COORD_ARRAY);
         glDisableClientState(GL_VERTEX_ARRAY);
 
         glBindBuffer(GL_ARRAY_BUFFER, 0);

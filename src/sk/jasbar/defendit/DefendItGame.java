@@ -15,6 +15,7 @@ import sk.jasbar.defendit.engine.render.LightingRenderable;
 import sk.jasbar.defendit.game.Player;
 import sk.jasbar.defendit.game.World;
 import sk.jasbar.defendit.game.worldgen.WorldGenJas;
+import sk.jasbar.defendit.game.worldgen.WorldGenNoise;
 import sk.jasbar.defendit.game.worldgen.WorldGeneratorDud;
 import sk.jasbar.defendit.game.worldgen.WorldGeneratorMain;
 import sk.jasbar.defendit.render.BlockRenderer;
@@ -37,9 +38,9 @@ public class DefendItGame extends Game {
 
     private void generateWorld() {
         WorldGeneratorMain gen = new WorldGeneratorMain();
-        gen.addModule(new WorldGeneratorDud());
+        //gen.addModule(new WorldGeneratorDud());
         gen.addModule(new WorldGenJas());
-        //gen.addModule(new WorldGenNoise());
+        gen.addModule(new WorldGenNoise());
         gen.generate(world);
     }
 
@@ -57,9 +58,9 @@ public class DefendItGame extends Game {
         if (settings.isShowFPS())
             updateables.add(new ShowFPS());
         generateWorld();
-        WorldRenderer worldRenderer = new WorldRenderer(world);
-        renderables.add(new LightingRenderable());
+        WorldRenderer worldRenderer = new WorldRenderer(world);       
         renderables.add(worldRenderer);
+        renderables.add(new LightingRenderable());
         cam.init();
         player.setX(20 * BlockRenderer.BLOCK_SIZE);
         player.setY(World.SIZE_Y * BlockRenderer.BLOCK_SIZE);
