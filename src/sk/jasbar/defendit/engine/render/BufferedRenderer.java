@@ -60,14 +60,15 @@ public class BufferedRenderer {
         vertices.flip();
         normals.flip();
         textures.flip();
+        
         glBindBuffer(GL_ARRAY_BUFFER, vertexPointer);
         glBufferData(GL_ARRAY_BUFFER, vertices, GL_STATIC_DRAW);
 
         glBindBuffer(GL_ARRAY_BUFFER, normalPointer);
-        glBufferData(GL_ARRAY_BUFFER, normalPointer, GL_STATIC_DRAW);
+        glBufferData(GL_ARRAY_BUFFER, normals, GL_STATIC_DRAW);
         
         glBindBuffer(GL_ARRAY_BUFFER, texturePointer);
-        glBufferData(GL_ARRAY_BUFFER, texturePointer, GL_STATIC_DRAW);
+        glBufferData(GL_ARRAY_BUFFER, textures, GL_STATIC_DRAW);
 
         glBindBuffer(GL_ARRAY_BUFFER, 0);
     }

@@ -12,7 +12,7 @@ public class WorldRenderer implements IRenderable {
     private final World world;
     // 1000 = far clipping plane. Dalej nema vyznam renderovat, kedze to OpenGL
     // aj tak odsekne...
-    public static final int renderDistance = (int) (1000);
+    public static final int renderDistance = (int) (200);
     private BufferedBlocksRenderer renderer;
     private boolean needsRender = true;
 

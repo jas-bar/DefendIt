@@ -11,50 +11,51 @@ public class BufferedBlocksRenderer extends BufferedRenderer implements IBlockRe
     }
 
     @Override
-    public void renderBackFace(World world, float x, float y, float z) {
-    	addNormal(0,0,-1);addVertex(x,y+B,z);
-    	addNormal(0,0,-1);addVertex(x+B, y+B, z);
-    	addNormal(0,0,-1);addVertex(x+B,y,z);
-    	addNormal(0,0,-1);addVertex(x, y, z);
-    }
-    @Override
-    public void renderFrontFace(World world, float x, float y, float z) {
-    	addNormal(0,0,1);addVertex(x,y,z+B);
-    	addNormal(0,0,1);addVertex(x+B, y, z+B);
-    	addNormal(0,0,1);addVertex(x+B,y+B,z+B);
-    	addNormal(0,0,1);addVertex(x, y+B, z+B);
+    public void renderBackFace(World world, int btx, int bty, float x, float y, float z) {
+        addNormal(0,0,-1);addVertex(x,y+B,z);
+        addNormal(0,0,-1);addVertex(x+B, y+B, z);
+        addNormal(0,0,-1);addVertex(x+B,y,z);
+        addNormal(0,0,-1);addVertex(x, y, z);
     }
 
     @Override
-    public void renderLeftFace(World world, float x, float y, float z) {
-    	addNormal(-1,0,0);addVertex(x,y,z);
-    	addNormal(-1,0,0);addVertex(x, y, z+B);
-    	addNormal(-1,0,0);addVertex(x,y+B,z+B);
-    	addNormal(-1,0,0);addVertex(x, y+B, z);
+    public void renderFrontFace(World world, int btx, int bty, float x, float y, float z) {
+        addNormal(0,0,1);addVertex(x,y,z+B);
+        addNormal(0,0,1);addVertex(x+B, y, z+B);
+        addNormal(0,0,1);addVertex(x+B,y+B,z+B);
+        addNormal(0,0,1);addVertex(x, y+B, z+B);
     }
 
     @Override
-    public void renderRightFace(World world, float x, float y, float z) {  	
-    	addNormal(1,0,0);addVertex(x+B,y+B,z);
-    	addNormal(1,0,0);addVertex(x+B, y+B, z+B);
-    	addNormal(1,0,0);addVertex(x+B,y,z+B);
-    	addNormal(1,0,0);addVertex(x+B, y, z);
+    public void renderLeftFace(World world, int btx, int bty, float x, float y, float z) {
+        addNormal(-1,0,0);addVertex(x,y,z);
+        addNormal(-1,0,0);addVertex(x, y, z+B);
+        addNormal(-1,0,0);addVertex(x,y+B,z+B);
+        addNormal(-1,0,0);addVertex(x, y+B, z);
     }
 
     @Override
-    public void renderUpFace(World world, float x, float y, float z) {
-    	addNormal(0,1,0);addVertex(x, y+B, z);
-    	addNormal(0,1,0);addVertex(x, y+B, z+B);
-    	addNormal(0,1,0);addVertex(x+B, y+B, z+B);
-    	addNormal(0,1,0);addVertex(x+B, y+B, z);
+    public void renderRightFace(World world, int btx, int bty, float x, float y, float z) {
+        addNormal(1,0,0);addVertex(x+B,y+B,z);
+        addNormal(1,0,0);addVertex(x+B, y+B, z+B);
+        addNormal(1,0,0);addVertex(x+B,y,z+B);
+        addNormal(1,0,0);addVertex(x+B, y, z);
     }
 
     @Override
-    public void renderDownFace(World world, float x, float y, float z) {
-    	addNormal(0,-1,0);addVertex(x+B, y, z);
-    	addNormal(0,-1,0);addVertex(x+B, y, z+B);
-    	addNormal(0,-1,0);addVertex(x, y, z+B);
-    	addNormal(0,-1,0);addVertex(x, y, z);
+    public void renderUpFace(World world, int btx, int bty, float x, float y, float z) {
+        addNormal(0,1,0);addVertex(x, y+B, z);
+        addNormal(0,1,0);addVertex(x, y+B, z+B);
+        addNormal(0,1,0);addVertex(x+B, y+B, z+B);
+        addNormal(0,1,0);addVertex(x+B, y+B, z);
+    }
+
+    @Override
+    public void renderDownFace(World world, int btx, int bty, float x, float y, float z) {
+        addNormal(0,-1,0);addVertex(x+B, y, z);
+        addNormal(0,-1,0);addVertex(x+B, y, z+B);
+        addNormal(0,-1,0);addVertex(x, y, z+B);
+        addNormal(0,-1,0);addVertex(x, y, z);
     }
 
 }
