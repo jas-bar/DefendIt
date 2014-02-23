@@ -17,92 +17,70 @@ public class Renderer {
     public static final byte ROTATE_Z = 4;
     public static final int BUFFER_SIZE = 0x200000;
     private static FloatBuffer vertices;
+    private static int count;
 
     public static void setColor(float r, float g, float b) {
         glColor3f(r, g, b);
     }
 
     public static void renderBackFace(Texture texture, float x, float y, float z, float w, float h, float d) {
-        glNormal3d(0.f, 0.f, -1.f);
-        glTexCoord2f(0, 1);
-        
-        glVertex3d(x, y + h, z);
-        
-        glTexCoord2f(1, 1);
-        glVertex3d(x + w, y + h, z);
-        glTexCoord2f(1, 0);
-        glVertex3d(x + w, y, z);
-        glTexCoord2f(0, 0);
-        glVertex3d(x, y, z);
-
+    	
+    	count++;
+    	vertices.put(x); vertices.put(y + h); vertices.put(z);
+    	vertices.put(x + w); vertices.put(y + h); vertices.put(z);
+    	vertices.put(x + w); vertices.put(y); vertices.put(z);
+    	vertices.put(x); vertices.put(y); vertices.put(z);
+    	
     }
 
     public static void renderFrontFace(Texture texture, float x, float y, float z, float w, float h, float d) {
-
-        glNormal3d(0.f, 0.f, 1.f);
-        glTexCoord2f(0, 0);
-        glVertex3d(x, y, z + d);
-        glTexCoord2f(1, 0);
-        glVertex3d(x + w, y, z + d);
-        glTexCoord2f(1, 1);
-        glVertex3d(x + w, y + h, z + d);
-        glTexCoord2f(0, 1);
-        glVertex3d(x, y + h, z + d);
+    	
+    	count++;
+    	vertices.put(x); vertices.put(y); vertices.put(z + d);
+    	vertices.put(x + w); vertices.put(y); vertices.put(z + d);
+    	vertices.put(x + w); vertices.put(y + h); vertices.put(z + d);
+    	vertices.put(x); vertices.put(y + h); vertices.put(z + d);
 
     }
 
     public static void renderRightFace(Texture texture, float x, float y, float z, float w, float h, float d) {
-
-        glNormal3d(1.f, 0.f, 0.f);
-        glTexCoord2f(0, 1);
-        glVertex3d(x + w, y + h, z);
-        glTexCoord2f(1, 1);
-        glVertex3d(x + w, y + h, z + d);
-        glTexCoord2f(1, 0);
-        glVertex3d(x + w, y, z + d);
-        glTexCoord2f(0, 0);
-        glVertex3d(x + w, y, z);
+    	
+    	count++;
+    	vertices.put(x + w); vertices.put(y + h); vertices.put(z);
+    	vertices.put(x + w); vertices.put(y + h); vertices.put(z + d);
+    	vertices.put(x + w); vertices.put(y); vertices.put(z + d);
+    	vertices.put(x + w); vertices.put(y); vertices.put(z);
 
     }
 
     public static void renderLeftFace(Texture texture, float x, float y, float z, float w, float h, float d) {
-
-        glNormal3d(-1.f, 0.f, 0.f);
-        glTexCoord2f(0, 0);
-        glVertex3d(x, y, z);
-        glTexCoord2f(0, 1);
-        glVertex3d(x, y, z + d);
-        glTexCoord2f(1, 1);
-        glVertex3d(x, y + h, z + d);
-        glTexCoord2f(1, 0);
-        glVertex3d(x, y + h, z);
+    	
+    	count++;
+    	vertices.put(x); vertices.put(y); vertices.put(z);
+    	vertices.put(x + w); vertices.put(y); vertices.put(z + d);
+    	vertices.put(x + w); vertices.put(y + h); vertices.put(z + d);
+    	vertices.put(x + w); vertices.put(y + h); vertices.put(z);  	
 
     }
 
     public static void renderUpFace(Texture texture, float x, float y, float z, float w, float h, float d) {
-
-        glNormal3d(0.f, 1.f, 0.f);
-        glTexCoord2f(0, 0);
-        glVertex3d(x, y + h, z);
-        glTexCoord2f(0, 1);
-        glVertex3d(x, y + h, z + d);
-        glTexCoord2f(1, 1);
-        glVertex3d(x + w, y + h, z + d);
-        glTexCoord2f(1, 0);
-        glVertex3d(x + w, y + h, z);
+    	
+    	count++;
+    	vertices.put(x); vertices.put(y + h); vertices.put(z);
+    	vertices.put(x); vertices.put(y + h); vertices.put(z + d);
+    	vertices.put(x + w); vertices.put(y + h); vertices.put(z + d);
+    	vertices.put(x + w); vertices.put(y + h); vertices.put(z);
 
     }
 
     public static void renderDownFace(Texture texture, float x, float y, float z, float w, float h, float d) {
-        glNormal3d(0.f, -1.f, 0.f);
-        glTexCoord2f(1, 0);
-        glVertex3d(x + w, y, z);
-        glTexCoord2f(1, 1);
-        glVertex3d(x + w, y, z + d);
-        glTexCoord2f(0, 1);
-        glVertex3d(x, y, z + d);
-        glTexCoord2f(0, 0);
-        glVertex3d(x, y, z);
+    	
+    	count++;
+    	vertices.put(x + w); vertices.put(y); vertices.put(z);
+    	vertices.put(x + w); vertices.put(y); vertices.put(z + d);
+    	vertices.put(x); vertices.put(y); vertices.put(z + d);
+    	vertices.put(x); vertices.put(y); vertices.put(z);
+    	
     }
 
     public static void drawTexturedRectangle(Texture texture, float x, float y, float w, float h) {

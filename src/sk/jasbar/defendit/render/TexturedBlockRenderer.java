@@ -23,9 +23,8 @@ public class TexturedBlockRenderer extends BlockRenderer {
     public void renderBlock(World world, int x, int y, int z) {
         float renderX = x * BLOCK_SIZE;
         float renderY = y * BLOCK_SIZE;
-        float renderZ = z * BLOCK_SIZE;
-        texture.bind();
-        GL11.glBegin(GL11.GL_QUADS);
+        float renderZ = z * BLOCK_SIZE;  
+        
         if (z > world.SIZE_Z - 1 || !Blocks.block(world.getBlockIdAt(x, y, z + 1)).renders(world, x, y, z + 1))
             Renderer.renderFrontFace(texture, renderX, renderY, renderZ, BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE);
         if (z < 1 || !Blocks.block(world.getBlockIdAt(x, y, z - 1)).renders(world, x, y, z - 1))
@@ -40,7 +39,6 @@ public class TexturedBlockRenderer extends BlockRenderer {
             Renderer.renderUpFace(texture, renderX, renderY, renderZ, BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE);
         if (y < 1 || !Blocks.block(world.getBlockIdAt(x, y - 1, z)).renders(world, x, y - 1, z))
             Renderer.renderDownFace(texture, renderX, renderY, renderZ, BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE);
-        GL11.glEnd();
     }
 
 }
