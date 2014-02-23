@@ -5,7 +5,7 @@ import java.nio.FloatBuffer;
 
 import javax.swing.JOptionPane;
 
-import sk.tomsik68.gamedev.engine3d.GameLoader;
+import sk.jasbar.defendit.engine.GameLoader;
 
 public class DefendItMain {
 

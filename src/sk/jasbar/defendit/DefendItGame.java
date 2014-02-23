@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
 
+import sk.jasbar.defendit.engine.Game;
 import sk.jasbar.defendit.engine.IRenderable;
 import sk.jasbar.defendit.engine.IUpdateable;
 import sk.jasbar.defendit.engine.PlayerMovementUpdateable;
@@ -14,13 +15,11 @@ import sk.jasbar.defendit.engine.render.LightingRenderable;
 import sk.jasbar.defendit.game.Player;
 import sk.jasbar.defendit.game.World;
 import sk.jasbar.defendit.game.worldgen.WorldGenJas;
-import sk.jasbar.defendit.game.worldgen.WorldGenNoise;
+import sk.jasbar.defendit.game.worldgen.WorldGeneratorDud;
 import sk.jasbar.defendit.game.worldgen.WorldGeneratorMain;
 import sk.jasbar.defendit.render.BlockRenderer;
 import sk.jasbar.defendit.render.WorldRenderer;
 import sk.jasbar.defendit.resources.Resources;
-import sk.tomsik68.gamedev.engine3d.Game;
-import sk.tomsik68.gamedev.engine3d.Renderer;
 
 public class DefendItGame extends Game {
     private final DefendItSettings settings;
@@ -38,23 +37,22 @@ public class DefendItGame extends Game {
 
     private void generateWorld() {
         WorldGeneratorMain gen = new WorldGeneratorMain();
-        //gen.addModule(new WorldGeneratorDud());
+        gen.addModule(new WorldGeneratorDud());
         gen.addModule(new WorldGenJas());
-        gen.addModule(new WorldGenNoise());
+        //gen.addModule(new WorldGenNoise());
         gen.generate(world);
     }
 
     @Override
     public void init() {
         try {
-            Renderer.init();
             resources.load();
         } catch (Exception e) {
             e.printStackTrace();
         }
         world = new World();
         player = new Player(world);
-        cam = new AbstractCamera(player, settings.getDisplayWidth() / settings.getDisplayHeight(), 70, 0.3f, 50000f);
+        cam = new AbstractCamera(player, settings.getDisplayWidth() / settings.getDisplayHeight(), 70, 0.3f, 5000f);
         updateables.add(new PlayerMovementUpdateable(player));
         if (settings.isShowFPS())
             updateables.add(new ShowFPS());
@@ -91,7 +89,7 @@ public class DefendItGame extends Game {
     }
     @Override
     public void exit() {
-        Renderer.cleanup();
+        // TODO: worldRenderer cleanup
         super.exit();
     }
 }

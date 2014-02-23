@@ -4,7 +4,7 @@ import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 
 import sk.jasbar.defendit.DefendItGame;
-import sk.tomsik68.gamedev.engine3d.Camera;
+import sk.jasbar.defendit.engine.render.Camera;
 
 public class CameraMovementUpdateable implements IUpdateable {
     private static final float CAMERA_STEP = 10f;
