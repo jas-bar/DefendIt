@@ -10,7 +10,7 @@ public class WorldRenderer implements IRenderable {
     private final World world;
     // 1000 = far clipping plane. Dalej nema vyznam renderovat, kedze to OpenGL
     // aj tak odsekne...
-    private static final int renderDistance = (int) (100);
+    public static final int renderDistance = (int) (100);
 
     public WorldRenderer(World world) {
         this.world = world;
@@ -31,6 +31,7 @@ public class WorldRenderer implements IRenderable {
 
     @Override
     public void render(DefendItGame game, ICameraCoordsProvider cam) {
+
         int xBegin = (int) Math.max(0, -cam.getCamX() / BlockRenderer.BLOCK_SIZE - renderDistance / 2);
         int yBegin = (int) Math.max(0, -cam.getCamY() / BlockRenderer.BLOCK_SIZE - renderDistance / 2);
         int zBegin = (int) Math.max(0, -cam.getCamZ() / BlockRenderer.BLOCK_SIZE - renderDistance / 2);
@@ -38,7 +39,8 @@ public class WorldRenderer implements IRenderable {
         int xEnd = (int) Math.min(xBegin + renderDistance, World.SIZE_X - 1);
         int yEnd = (int) Math.min(yBegin + renderDistance, World.SIZE_Y - 1);
         int zEnd = (int) Math.min(zBegin + renderDistance, World.SIZE_Z - 1);
-
+        
+        
         for (int x = xBegin; x < xEnd; ++x) {
             for (int z = zBegin; z < zEnd; ++z) {
                 for (int y = yBegin; y < yEnd; ++y) {
@@ -49,6 +51,7 @@ public class WorldRenderer implements IRenderable {
                 }
             }
         }
+
     }
 
 }

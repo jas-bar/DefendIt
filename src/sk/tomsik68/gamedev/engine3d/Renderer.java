@@ -2,256 +2,139 @@ package sk.tomsik68.gamedev.engine3d;
 
 import static org.lwjgl.opengl.GL11.*;
 
+import java.nio.FloatBuffer;
+
+import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL11;
 import org.newdawn.slick.opengl.Texture;
 
+import sk.jasbar.defendit.game.World;
+import sk.jasbar.defendit.render.WorldRenderer;
+
 public class Renderer {
-	public static final byte ROTATE_X = 1;
-	public static final byte ROTATE_Y = 2;
-	public static final byte ROTATE_Z = 4;
+    public static final byte ROTATE_X = 1;
+    public static final byte ROTATE_Y = 2;
+    public static final byte ROTATE_Z = 4;
+    public static final int BUFFER_SIZE = 0x200000;
+    private static FloatBuffer vertices;
 
-	public static void setColor(float r, float g, float b) {
-		glColor3f(r, g, b);
-	}
+    public static void setColor(float r, float g, float b) {
+        glColor3f(r, g, b);
+    }
 
-	public static void renderBackFace(Texture texture, float x, float y, float z, float w,
-			float h, float d) {
-		texture.bind();
-		glBegin(GL_QUADS);
-		{
-			glNormal3d(0.f, 0.f, -1.f);
-			glTexCoord2f(0,1);glVertex3d(x, y + h, z);
-			glTexCoord2f(1,1);glVertex3d(x + w, y + h, z);
-			glTexCoord2f(1,0);glVertex3d(x + w, y, z);
-			glTexCoord2f(0,0);glVertex3d(x, y, z);
-		}
-		glEnd();
-	}
+    public static void renderBackFace(Texture texture, float x, float y, float z, float w, float h, float d) {
+        glNormal3d(0.f, 0.f, -1.f);
+        glTexCoord2f(0, 1);
+        
+        glVertex3d(x, y + h, z);
+        
+        glTexCoord2f(1, 1);
+        glVertex3d(x + w, y + h, z);
+        glTexCoord2f(1, 0);
+        glVertex3d(x + w, y, z);
+        glTexCoord2f(0, 0);
+        glVertex3d(x, y, z);
 
-	public static void renderFrontFace(Texture texture,float x, float y, float z, float w,
-			float h, float d) {
-		texture.bind();
-		glBegin(GL_QUADS);
-		{
-			glNormal3d(0.f, 0.f, 1.f);
-			glTexCoord2f(0,0);glVertex3d(x, y, z + d);
-			glTexCoord2f(1,0);glVertex3d(x + w, y, z + d);
-			glTexCoord2f(1,1);glVertex3d(x + w, y + h, z + d);
-			glTexCoord2f(0,1);glVertex3d(x, y + h, z + d);
-		}
-		glEnd();
-	}
+    }
 
-	public static void renderRightFace(Texture texture,float x, float y, float z, float w,
-			float h, float d) {
-		texture.bind();
-		glBegin(GL_QUADS);
-		{
-			glNormal3d(1.f, 0.f, 0.f);
-			glTexCoord2f(0,1);glVertex3d(x + w, y + h, z);
-			glTexCoord2f(1,1);glVertex3d(x + w, y + h, z + d);
-			glTexCoord2f(1,0);glVertex3d(x + w, y, z + d);
-			glTexCoord2f(0,0);glVertex3d(x + w, y, z);
-		}
-		glEnd();
-	}
+    public static void renderFrontFace(Texture texture, float x, float y, float z, float w, float h, float d) {
 
-	public static void renderLeftFace(Texture texture,float x, float y, float z, float w,
-			float h, float d) {
-		texture.bind();
-		glBegin(GL_QUADS);
-		{
-			glNormal3d(-1.f, 0.f, 0.f);
-			glTexCoord2f(0,0);glVertex3d(x, y, z);
-			glTexCoord2f(0,1);glVertex3d(x, y, z + d);
-			glTexCoord2f(1,1);glVertex3d(x, y + h, z + d);
-			glTexCoord2f(1,0);glVertex3d(x, y + h, z);
-		}
-		glEnd();
-	}
+        glNormal3d(0.f, 0.f, 1.f);
+        glTexCoord2f(0, 0);
+        glVertex3d(x, y, z + d);
+        glTexCoord2f(1, 0);
+        glVertex3d(x + w, y, z + d);
+        glTexCoord2f(1, 1);
+        glVertex3d(x + w, y + h, z + d);
+        glTexCoord2f(0, 1);
+        glVertex3d(x, y + h, z + d);
 
-	public static void renderUpFace(Texture texture,float x, float y, float z, float w,
-			float h, float d) {
-		texture.bind();
-		glBegin(GL_QUADS);
-		{
-			glNormal3d(0.f, 1.f, 0.f);
-			glTexCoord2f(0,0);glVertex3d(x, y + h, z);
-			glTexCoord2f(0,1);glVertex3d(x, y + h, z + d);
-			glTexCoord2f(1,1);glVertex3d(x + w, y + h, z + d);
-			glTexCoord2f(1,0);glVertex3d(x + w, y + h, z);
-		}
-		glEnd();
-	}
+    }
 
-	public static void renderDownFace(Texture texture,float x, float y, float z, float w,
-			float h, float d) {
-		texture.bind();
-		glBegin(GL_QUADS);
-		{
-			glNormal3d(0.f, -1.f, 0.f);
-			glTexCoord2f(1,0);glVertex3d(x + w, y, z);
-			glTexCoord2f(1,1);glVertex3d(x + w, y, z + d);
-			glTexCoord2f(0,1);glVertex3d(x, y, z + d);
-			glTexCoord2f(0,0);glVertex3d(x, y, z);
-		}
-		glEnd();
-	}
+    public static void renderRightFace(Texture texture, float x, float y, float z, float w, float h, float d) {
 
-	public static void renderBox(float x, float y, float z, float w, float h,
-			float d) {
-		w /= 2;
-		h /= 2;
-		d /= 2;
+        glNormal3d(1.f, 0.f, 0.f);
+        glTexCoord2f(0, 1);
+        glVertex3d(x + w, y + h, z);
+        glTexCoord2f(1, 1);
+        glVertex3d(x + w, y + h, z + d);
+        glTexCoord2f(1, 0);
+        glVertex3d(x + w, y, z + d);
+        glTexCoord2f(0, 0);
+        glVertex3d(x + w, y, z);
 
-		glBegin(GL_QUADS);
-		{
-			// front face
-			glVertex3d(x, y, z);
-			glVertex3d(x + w, y, z);
-			glVertex3d(x + w, y + h, z);
-			glVertex3d(x, y + h, z);
-			// glNormal3d(0.f, 0.f, -1.f);
-		}
-		glEnd();
-		// glVertex3d(x, y, z);
-		glBegin(GL_QUADS);
-		{
-			// right face
-			glVertex3d(x + w, y, z);
-			glVertex3d(x + w, y, z + d);
-			glVertex3d(x + w, y + h, z + d);
-			glVertex3d(x + w, y + h, z);
-			// glNormal3d(-1.f, 0.f, 0.f);
-			// glVertex3d(x + w, y, z);
-		}
-		glEnd();
-		glBegin(GL_QUADS);
-		{
+    }
 
-			// down face
-			glVertex3d(x, y + h, z);
-			glVertex3d(x, y + h, z + d);
-			glVertex3d(x + w, y + h, z + d);
-			glVertex3d(x + w, y + h, z);
-			// glVertex3d(x, y + h, z);
-		}
-		glEnd();
-		glBegin(GL_QUADS);
-		{
-			// back face
-			glVertex3d(x, y, z + d);
-			glVertex3d(x + w, y, z + d);
-			glVertex3d(x + w, y + h, z + d);
-			glVertex3d(x, y + h, z + d);
-			// glVertex3d(x, y, z + d);
-		}
-		glEnd();
-		glBegin(GL_QUADS);
-		{
-			// left face
-			glVertex3d(x, y, z);
-			glVertex3d(x, y, z + d);
-			glVertex3d(x, y + h, z + d);
-			glVertex3d(x, y + h, z);
-			// glVertex3d(x, y, z);
-		}
-		glEnd();
-		glBegin(GL_QUADS);
-		{
+    public static void renderLeftFace(Texture texture, float x, float y, float z, float w, float h, float d) {
 
-			// up face
-			glVertex3d(x, y, z);
-			glVertex3d(x, y, z + d);
-			glVertex3d(x + w, y, z + d);
-			glVertex3d(x + w, y, z);
-			// glVertex3d(x, y, z);
-		}
-		glEnd();
+        glNormal3d(-1.f, 0.f, 0.f);
+        glTexCoord2f(0, 0);
+        glVertex3d(x, y, z);
+        glTexCoord2f(0, 1);
+        glVertex3d(x, y, z + d);
+        glTexCoord2f(1, 1);
+        glVertex3d(x, y + h, z + d);
+        glTexCoord2f(1, 0);
+        glVertex3d(x, y + h, z);
 
-	}
+    }
 
-	public static void renderTexturedBox(float x, float y, float z, float w,
-			float h, float d, Texture... textures) {
-		int tex = 0;
-		glBegin(GL_QUADS);
-		{
-			textures[(tex++ % textures.length) % 6].bind();
-			// front face
-			glTexCoord2f(0, 0);
-			glVertex3d(x, y, z);
-			glTexCoord2f(1, 0);
-			glVertex3d(x + w, y, z);
-			glTexCoord2f(1, 1);
-			glVertex3d(x + w, y + h, z);
-			glTexCoord2f(0, 1);
-			glVertex3d(x, y + h, z);
-			// glVertex3d(x, y, z);
+    public static void renderUpFace(Texture texture, float x, float y, float z, float w, float h, float d) {
 
-			textures[tex++ % 6].bind();
-			// right face
-			glTexCoord2f(0, 0);
-			glVertex3d(x + w, y, z);
-			glTexCoord2f(1, 0);
-			glVertex3d(x + w, y, z + d);
-			glTexCoord2f(1, 1);
-			glVertex3d(x + w, y + h, z + d);
-			glTexCoord2f(0, 1);
-			glVertex3d(x + w, y + h, z);
-			// glVertex3d(x + w, y, z);
+        glNormal3d(0.f, 1.f, 0.f);
+        glTexCoord2f(0, 0);
+        glVertex3d(x, y + h, z);
+        glTexCoord2f(0, 1);
+        glVertex3d(x, y + h, z + d);
+        glTexCoord2f(1, 1);
+        glVertex3d(x + w, y + h, z + d);
+        glTexCoord2f(1, 0);
+        glVertex3d(x + w, y + h, z);
 
-			textures[tex++ % 6].bind();
-			// down face
-			glTexCoord2f(0, 0);
-			glVertex3d(x, y + h, z);
-			glTexCoord2f(1, 0);
-			glVertex3d(x, y + h, z + d);
-			glTexCoord2f(1, 1);
-			glVertex3d(x + w, y + h, z + d);
-			glTexCoord2f(0, 1);
-			glVertex3d(x, y + h, z + d);
-			// glVertex3d(x, y + h, z);
+    }
 
-			textures[tex++ % 6].bind();
-			// back face
-			glTexCoord2f(0, 0);
-			glVertex3d(x, y, z + d);
-			glTexCoord2f(1, 0);
-			glVertex3d(x + w, y, z + d);
-			glTexCoord2f(1, 1);
-			glVertex3d(x + w, y + h, z + d);
-			glTexCoord2f(0, 1);
-			glVertex3d(x, y + h, z + d);
-			// glVertex3d(x, y, z + d);
+    public static void renderDownFace(Texture texture, float x, float y, float z, float w, float h, float d) {
+        glNormal3d(0.f, -1.f, 0.f);
+        glTexCoord2f(1, 0);
+        glVertex3d(x + w, y, z);
+        glTexCoord2f(1, 1);
+        glVertex3d(x + w, y, z + d);
+        glTexCoord2f(0, 1);
+        glVertex3d(x, y, z + d);
+        glTexCoord2f(0, 0);
+        glVertex3d(x, y, z);
+    }
 
-			textures[tex++ % 6].bind();
-			// left face
-			glTexCoord2f(0, 0);
-			glVertex3d(x, y, z);
-			glTexCoord2f(1, 0);
-			glVertex3d(x, y, z + d);
-			glTexCoord2f(1, 1);
-			glVertex3d(x, y + h, z + d);
-			glTexCoord2f(0, 1);
-			glVertex3d(x, y + h, z);
-			// glVertex3d(x, y, z);
+    public static void drawTexturedRectangle(Texture texture, float x, float y, float w, float h) {
+        drawColorizedTexturedRectangle(texture, x, y, w, h, 1, 1, 1);
+    }
 
-			textures[tex++ % 6].bind();
-			// up face
-			glTexCoord2f(0, 0);
-			glVertex3d(x, y, z);
-			glTexCoord2f(1, 0);
-			glVertex3d(x, y, z + d);
-			glTexCoord2f(1, 1);
-			glVertex3d(x + w, y, z + d);
-			glTexCoord2f(0, 1);
-			glVertex3d(x, y, z + d);
-			// glVertex3d(x, y, z);
-		}
-		glEnd();
-	}
+    public static void drawColorizedTexturedRectangle(Texture texture, float x, float y, float w, float h, float r, float g, float b) {
+        texture.bind();
+        glColor3f(r, g, b);
+        glBegin(GL_QUADS);
+        {
+            glTexCoord2f(1, 0);
+            glVertex2f(x + w, y);
 
-	public static void rotate(int i, double angle) {
-		GL11.glRotated(angle, i & ROTATE_X, i & ROTATE_Y, i & ROTATE_Z);
-	}
+            glTexCoord2f(0, 0);
+            glVertex2f(x, y);
+
+            glTexCoord2f(0, 1);
+            glVertex2f(x, y + h);
+
+            glTexCoord2f(1, 1);
+            glVertex2f(x + w, y + h);
+        }
+        glEnd();
+    }
+
+    public static void rotate(int i, double angle) {
+        GL11.glRotated(angle, i & ROTATE_X, i & ROTATE_Y, i & ROTATE_Z);
+    }
+
+    public static void init() throws Exception {
+        vertices = BufferUtils.createFloatBuffer(BUFFER_SIZE);
+
+    }
 }

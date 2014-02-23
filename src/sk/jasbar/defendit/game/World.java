@@ -52,7 +52,7 @@ public class World {
     }
 
     private boolean blockRenders(int x, int y, int z) {
-        return Blocks.block(getBlockIdAt(x, y, z)).renders(this, x, y, z) && visibleTest(x, y, z);
+        return Blocks.block(getBlockIdAt(x, y, z)).renders(this, x, y, z);
     }
 
     public boolean visibleTest(int x, int y, int z) {

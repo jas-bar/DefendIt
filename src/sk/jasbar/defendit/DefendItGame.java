@@ -15,12 +15,12 @@ import sk.jasbar.defendit.game.Player;
 import sk.jasbar.defendit.game.World;
 import sk.jasbar.defendit.game.worldgen.WorldGenJas;
 import sk.jasbar.defendit.game.worldgen.WorldGenNoise;
-import sk.jasbar.defendit.game.worldgen.WorldGeneratorDud;
 import sk.jasbar.defendit.game.worldgen.WorldGeneratorMain;
 import sk.jasbar.defendit.render.BlockRenderer;
 import sk.jasbar.defendit.render.WorldRenderer;
 import sk.jasbar.defendit.resources.Resources;
 import sk.tomsik68.gamedev.engine3d.Game;
+import sk.tomsik68.gamedev.engine3d.Renderer;
 
 public class DefendItGame extends Game {
     private final DefendItSettings settings;
@@ -47,9 +47,9 @@ public class DefendItGame extends Game {
     @Override
     public void init() {
         try {
+            Renderer.init();
             resources.load();
         } catch (Exception e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
         world = new World();
@@ -72,6 +72,7 @@ public class DefendItGame extends Game {
 
     @Override
     public void render() {
+        
         cam.useView();
         GL11.glPushMatrix();
         {
@@ -80,7 +81,6 @@ public class DefendItGame extends Game {
             }
         }
         GL11.glPopMatrix();
-
     }
 
     @Override
