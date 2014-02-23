@@ -21,7 +21,7 @@ public class TexturedBlockRenderer extends BlockRenderer {
         float renderX = x * BLOCK_SIZE;
         float renderY = y * BLOCK_SIZE;
         float renderZ = z * BLOCK_SIZE;  
-        texture.bind();
+        
         if (z > World.SIZE_Z - 1 || !Blocks.block(world.getBlockIdAt(x, y, z + 1)).renders(world, x, y, z + 1))
             target.renderFrontFace(world, 0, 0, renderX, renderY, renderZ);
             //Renderer.renderFrontFace(texture, renderX, renderY, renderZ, BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE);

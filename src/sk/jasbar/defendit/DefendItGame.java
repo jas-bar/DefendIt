@@ -51,6 +51,7 @@ public class DefendItGame extends Game {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        Resources.getTexture("textures.textures").bind();
         world = new World();
         player = new Player(world);
         cam = new AbstractCamera(player, settings.getDisplayWidth() / settings.getDisplayHeight(), 50, 0.3f, 500000f);
