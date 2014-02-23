@@ -10,12 +10,15 @@ import org.lwjgl.opengl.GL11;
 import org.newdawn.slick.opengl.Texture;
 
 import sk.jasbar.defendit.game.World;
+import sk.jasbar.defendit.render.WorldRenderer;
+import sk.jasbar.defendit.resources.Resources;
 
 public class Renderer {
     public static final byte ROTATE_X = 1;
     public static final byte ROTATE_Y = 2;
     public static final byte ROTATE_Z = 4;
-    public static final int BUFFER_SIZE = 0x200000;
+    public static final int BUFFER_SIZE = WorldRenderer.renderDistance*WorldRenderer.renderDistance*32/2*6*4;
+    //public static final int BUFFER_SIZE = 0x200000;
     private static final int VERTEX_SIZE = 3;
     private static FloatBuffer vertices;
     private static int vertexHandle;
@@ -28,60 +31,61 @@ public class Renderer {
     public static void renderBackFace(Texture texture, float x, float y, float z, float w, float h, float d) {
     	
     	count++;
-    	vertices.put(x); vertices.put(y + h); vertices.put(z);
-    	vertices.put(x + w); vertices.put(y + h); vertices.put(z);
-    	vertices.put(x + w); vertices.put(y); vertices.put(z);
-    	vertices.put(x); vertices.put(y); vertices.put(z);
+    	
+    	vertices.put(x).put(y + h).put(z);
+    	vertices.put(x + w).put(y + h).put(z);
+    	vertices.put(x + w).put(y).put(z);
+    	vertices.put(x).put(y).put(z);
     	
     }
 
     public static void renderFrontFace(Texture texture, float x, float y, float z, float w, float h, float d) {
     	
     	count++;
-    	vertices.put(x); vertices.put(y); vertices.put(z + d);
-    	vertices.put(x + w); vertices.put(y); vertices.put(z + d);
-    	vertices.put(x + w); vertices.put(y + h); vertices.put(z + d);
-    	vertices.put(x); vertices.put(y + h); vertices.put(z + d);
+    	vertices.put(x).put(y).put(z + d);
+    	vertices.put(x + w).put(y).put(z + d);
+    	vertices.put(x + w).put(y + h).put(z + d);
+    	vertices.put(x).put(y + h).put(z + d);
 
     }
 
     public static void renderRightFace(Texture texture, float x, float y, float z, float w, float h, float d) {
     	
     	count++;
-    	vertices.put(x + w); vertices.put(y + h); vertices.put(z);
-    	vertices.put(x + w); vertices.put(y + h); vertices.put(z + d);
-    	vertices.put(x + w); vertices.put(y); vertices.put(z + d);
-    	vertices.put(x + w); vertices.put(y); vertices.put(z);
+    	vertices.put(x + w).put(y + h).put(z);
+    	vertices.put(x + w).put(y + h).put(z + d);
+    	vertices.put(x + w).put(y).put(z + d);
+    	vertices.put(x + w).put(y).put(z);
 
     }
 
     public static void renderLeftFace(Texture texture, float x, float y, float z, float w, float h, float d) {
     	
     	count++;
-    	vertices.put(x); vertices.put(y); vertices.put(z);
-    	vertices.put(x + w); vertices.put(y); vertices.put(z + d);
-    	vertices.put(x + w); vertices.put(y + h); vertices.put(z + d);
-    	vertices.put(x + w); vertices.put(y + h); vertices.put(z);  	
+    	vertices.put(x).put(y).put(z);
+    	vertices.put(x).put(y).put(z + d);
+    	vertices.put(x).put(y + h).put(z + d);
+    	vertices.put(x).put(y + h).put(z);  	
 
     }
 
     public static void renderUpFace(Texture texture, float x, float y, float z, float w, float h, float d) {
     	
     	count++;
-    	vertices.put(x); vertices.put(y + h); vertices.put(z);
-    	vertices.put(x); vertices.put(y + h); vertices.put(z + d);
-    	vertices.put(x + w); vertices.put(y + h); vertices.put(z + d);
-    	vertices.put(x + w); vertices.put(y + h); vertices.put(z);
+    	vertices.put(x).put(y + h).put(z);
+    	vertices.put(x).put(y + h).put(z + d);
+    	vertices.put(x + w).put(y + h).put(z + d);
+    	vertices.put(x + w).put(y + h).put(z);
 
     }
 
     public static void renderDownFace(Texture texture, float x, float y, float z, float w, float h, float d) {
     	
     	count++;
-    	vertices.put(x + w); vertices.put(y); vertices.put(z);
-    	vertices.put(x + w); vertices.put(y); vertices.put(z + d);
-    	vertices.put(x); vertices.put(y); vertices.put(z + d);
-    	vertices.put(x); vertices.put(y); vertices.put(z);
+    	vertices.put(x + w).put(y).put(z);
+    	vertices.put(x + w).put(y).put(z + d);
+    	vertices.put(x).put(y).put(z + d);
+    	vertices.put(x).put(y).put(z);
     	
     }
 
@@ -114,6 +118,8 @@ public class Renderer {
     }
 
     public static void draw() {
+    	vertices.flip();
+    	
         glBindBuffer(GL_ARRAY_BUFFER, vertexHandle);
         glBufferData(GL_ARRAY_BUFFER, vertices, GL_STATIC_DRAW);
         
@@ -122,14 +128,17 @@ public class Renderer {
         glEnableClientState(GL_VERTEX_ARRAY);
         glDrawArrays(GL_QUADS, 0, count*4*3);
         glDisableClientState(GL_VERTEX_ARRAY);
-        
+
         vertices.clear();
+        count = 0;
         
     }
 
     public static void init() throws Exception {
-        vertices = BufferUtils.createFloatBuffer(BUFFER_SIZE);
+    	
+        vertices = BufferUtils.createFloatBuffer(BUFFER_SIZE*3);
         vertexHandle = glGenBuffers();
+        
     }
     
     public static void cleanup(){
