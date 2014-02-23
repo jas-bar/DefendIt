@@ -89,5 +89,9 @@ public class DefendItGame extends Game {
             updateable.update(this);
         }
     }
-
+    @Override
+    public void exit() {
+        Renderer.cleanup();
+        super.exit();
+    }
 }

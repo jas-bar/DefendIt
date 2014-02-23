@@ -1,6 +1,7 @@
 package sk.tomsik68.gamedev.engine3d;
 
 import static org.lwjgl.opengl.GL11.*;
+import static org.lwjgl.opengl.GL15.*;
 
 import java.nio.FloatBuffer;
 
@@ -9,14 +10,15 @@ import org.lwjgl.opengl.GL11;
 import org.newdawn.slick.opengl.Texture;
 
 import sk.jasbar.defendit.game.World;
-import sk.jasbar.defendit.render.WorldRenderer;
 
 public class Renderer {
     public static final byte ROTATE_X = 1;
     public static final byte ROTATE_Y = 2;
     public static final byte ROTATE_Z = 4;
     public static final int BUFFER_SIZE = 0x200000;
+    private static final int VERTEX_SIZE = 3;
     private static FloatBuffer vertices;
+    private static int vertexHandle;
     private static int count;
 
     public static void setColor(float r, float g, float b) {
@@ -111,8 +113,26 @@ public class Renderer {
         GL11.glRotated(angle, i & ROTATE_X, i & ROTATE_Y, i & ROTATE_Z);
     }
 
+    public static void draw() {
+        glBindBuffer(GL_ARRAY_BUFFER, vertexHandle);
+        glBufferData(GL_ARRAY_BUFFER, vertices, GL_STATIC_DRAW);
+        
+        glVertexPointer(VERTEX_SIZE, GL_FLOAT, 0, 0);
+        
+        glEnableClientState(GL_VERTEX_ARRAY);
+        glDrawArrays(GL_QUADS, 0, count*4*3);
+        glDisableClientState(GL_VERTEX_ARRAY);
+        
+        vertices.clear();
+        
+    }
+
     public static void init() throws Exception {
         vertices = BufferUtils.createFloatBuffer(BUFFER_SIZE);
-
+        vertexHandle = glGenBuffers();
+    }
+    
+    public static void cleanup(){
+        glDeleteBuffers(vertexHandle);
     }
 }

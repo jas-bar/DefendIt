@@ -5,12 +5,13 @@ import sk.jasbar.defendit.engine.IRenderable;
 import sk.jasbar.defendit.engine.render.ICameraCoordsProvider;
 import sk.jasbar.defendit.game.Blocks;
 import sk.jasbar.defendit.game.World;
+import sk.tomsik68.gamedev.engine3d.Renderer;
 
 public class WorldRenderer implements IRenderable {
     private final World world;
     // 1000 = far clipping plane. Dalej nema vyznam renderovat, kedze to OpenGL
     // aj tak odsekne...
-    public static final int renderDistance = (int) (100);
+    public static final int renderDistance = (int) (20);
 
     public WorldRenderer(World world) {
         this.world = world;
@@ -51,7 +52,7 @@ public class WorldRenderer implements IRenderable {
                 }
             }
         }
-
+        Renderer.draw();
     }
 
 }
