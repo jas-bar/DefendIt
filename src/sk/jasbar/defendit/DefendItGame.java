@@ -12,6 +12,8 @@ import sk.jasbar.defendit.engine.PlayerMovementUpdateable;
 import sk.jasbar.defendit.engine.ShowFPS;
 import sk.jasbar.defendit.engine.render.AbstractCamera;
 import sk.jasbar.defendit.engine.render.LightingRenderable;
+import sk.jasbar.defendit.engine.render.TextureManager;
+import sk.jasbar.defendit.game.Blocks;
 import sk.jasbar.defendit.game.Player;
 import sk.jasbar.defendit.game.World;
 import sk.jasbar.defendit.game.worldgen.WorldGenJas;
@@ -51,7 +53,7 @@ public class DefendItGame extends Game {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        Resources.getTexture("textures.textures").bind();
+        Blocks.init(new TextureManager(Resources.getTexture("textures.textures"), 2, 2));
         world = new World();
         player = new Player(world);
         cam = new AbstractCamera(player, settings.getDisplayWidth() / settings.getDisplayHeight(), 50, 0.3f, 500000f);
