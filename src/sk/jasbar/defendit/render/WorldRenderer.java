@@ -4,7 +4,9 @@ import org.lwjgl.opengl.GL11;
 
 import sk.jasbar.defendit.DefendItGame;
 import sk.jasbar.defendit.engine.IRenderable;
+import sk.jasbar.defendit.engine.render.Frustum;
 import sk.jasbar.defendit.engine.render.ICameraCoordsProvider;
+import sk.jasbar.defendit.engine.render.ICulling;
 import sk.jasbar.defendit.game.Blocks;
 import sk.jasbar.defendit.game.Player;
 import sk.jasbar.defendit.game.World;
@@ -18,6 +20,7 @@ public class WorldRenderer implements IRenderable {
     private BufferedBlocksRenderer renderer;
     public static boolean needsRender = true;
     private final float FOV = 30;
+    private final ICulling culling;
 
     public WorldRenderer(World world) {
         this.world = world;
@@ -29,7 +32,8 @@ public class WorldRenderer implements IRenderable {
                 }
             }
         }
-
+        culling = new Frustum();
+        culling.init(this);
     }
 
     private boolean blockRenders(ICameraCoordsProvider cam, int x, int y, int z) {
@@ -45,9 +49,9 @@ public class WorldRenderer implements IRenderable {
 
     private boolean isBlockInFrustrum(Player plr, int xBlock, int yBlock, int zBlock) {
         // z = tg (ry) * x
-        double z = Math.tan(Math.toRadians(90 + plr.getCamRY())) * xBlock * BlockRenderer.BLOCK_SIZE;
-        double x = Math.tan(Math.toRadians(90 + plr.getCamRY())) * zBlock * BlockRenderer.BLOCK_SIZE;
-        return (z > zBlock * BlockRenderer.BLOCK_SIZE) && (x > xBlock * BlockRenderer.BLOCK_SIZE);
+        double z = plr.getZ()/BlockRenderer.BLOCK_SIZE + Math.tan(Math.toRadians(plr.getCamRY())) * zBlock;
+        double x = plr.getX()/BlockRenderer.BLOCK_SIZE + Math.tan(Math.toRadians(plr.getCamRY())) * xBlock;
+        return (z > zBlock) && (x > xBlock);
     }
 
     @Override
