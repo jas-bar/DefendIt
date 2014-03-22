@@ -5,6 +5,6 @@ import sk.jasbar.defendit.engine.render.ICameraCoordsProvider;
 
 public interface IRenderable {
 
-    void render(DefendItGame defendItGame, ICameraCoordsProvider camCoords);
+    public void render(DefendItGame defendItGame, ICameraCoordsProvider camCoords);
 
 }

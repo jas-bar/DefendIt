@@ -1,6 +1,13 @@
 package sk.jasbar.defendit.game;
 
-public class World {
+import java.util.ArrayList;
+import java.util.List;
+
+import sk.jasbar.defendit.DefendItGame;
+import sk.jasbar.defendit.engine.IUpdateable;
+
+public class World implements IUpdateable {
+    private ArrayList<Entity> entities = new ArrayList<Entity>();
     public static final int SIZE_X = 1024, SIZE_Y = 32, SIZE_Z = 1024;
     private byte[][][] blocks = new byte[SIZE_X][SIZE_Y][SIZE_Z];
     private boolean[][][] visible = new boolean[SIZE_X][SIZE_Y][SIZE_Z];
@@ -61,9 +68,28 @@ public class World {
                     || !Blocks.block(getBlockIdAt(x - 1, y, z)).renders(this, x - 1, y, z)
                     || !Blocks.block(getBlockIdAt(x, y + 1, z)).renders(this, x, y + 1, z)
                     || !Blocks.block(getBlockIdAt(x, y - 1, z)).renders(this, x, y - 1, z)
-                    || !Blocks.block(getBlockIdAt(x, y, z - 1)).renders(this, x, y, z - 1) 
-                    || !Blocks.block(getBlockIdAt(x, y, z + 1)).renders(this,x, y, z + 1));
+                    || !Blocks.block(getBlockIdAt(x, y, z - 1)).renders(this, x, y, z - 1) || !Blocks.block(getBlockIdAt(x, y, z + 1)).renders(this,
+                    x, y, z + 1));
         } else
             return false;
+    }
+
+    public List<Entity> getEntities() {
+        return entities;
+    }
+
+    public void addEntity(Entity entity) {
+        entities.add(entity);
+    }
+
+    public void removeEntity(Entity entity) {
+        entities.remove(entity);
+    }
+
+    @Override
+    public void update(DefendItGame game) {
+        for (Entity entity : entities) {
+            entity.tick();
+        }
     }
 }

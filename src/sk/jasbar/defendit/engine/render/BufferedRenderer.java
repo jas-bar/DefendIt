@@ -7,8 +7,6 @@ import java.nio.FloatBuffer;
 
 import org.lwjgl.BufferUtils;
 
-import sk.jasbar.defendit.render.WorldRenderer;
-
 public class BufferedRenderer {
 	private static final int BUFFER_SIZE = 0x2000000;
     //private static final int BUFFER_SIZE = WorldRenderer.renderDistance * WorldRenderer.renderDistance * 32 / 2 * 6 * 4;

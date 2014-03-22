@@ -14,10 +14,10 @@ public class TextureManager {
 
     public Rectangle2D getBounds(int btx, int bty) {
         Rectangle2D rect = new Rectangle2D();
-        rect.w = 1-1.0f / (1f * blocksTexture.getWidth() / blocksX);
-        rect.x = btx * rect.w;
-        rect.h = 1-1.0f / (1f * blocksTexture.getHeight() / blocksY);
-        rect.y = bty * rect.h;
+        rect.w = 1.f/blocksX;
+        rect.x = 1.f/blocksX*btx;
+        rect.h = 1.f/blocksY;
+        rect.y = 1.f/blocksY*bty;
         return rect;
     }
 }

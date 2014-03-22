@@ -18,7 +18,6 @@ import sk.jasbar.defendit.game.Player;
 import sk.jasbar.defendit.game.World;
 import sk.jasbar.defendit.game.worldgen.WorldGenJas;
 import sk.jasbar.defendit.game.worldgen.WorldGenNoise;
-import sk.jasbar.defendit.game.worldgen.WorldGeneratorDud;
 import sk.jasbar.defendit.game.worldgen.WorldGeneratorMain;
 import sk.jasbar.defendit.render.BlockRenderer;
 import sk.jasbar.defendit.render.WorldRenderer;
@@ -56,10 +55,12 @@ public class DefendItGame extends Game {
         Blocks.init(new TextureManager(Resources.getTexture("textures.textures"), 2, 2));
         world = new World();
         player = new Player(world);
+        world.addEntity(player);
         cam = new AbstractCamera(player, settings.getDisplayWidth() / settings.getDisplayHeight(), 50, 0.3f, 500000f);
         updateables.add(new PlayerMovementUpdateable(player));
         if (settings.isShowFPS())
             updateables.add(new ShowFPS());
+        updateables.add(world);
         generateWorld();
         WorldRenderer worldRenderer = new WorldRenderer(world);       
         renderables.add(worldRenderer);

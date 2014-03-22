@@ -5,6 +5,7 @@ import org.lwjgl.input.Mouse;
 
 import sk.jasbar.defendit.DefendItGame;
 import sk.jasbar.defendit.engine.render.Camera;
+import sk.jasbar.defendit.render.WorldRenderer;
 
 public class CameraMovementUpdateable implements IUpdateable {
     private static final float CAMERA_STEP = 10f;

@@ -1,6 +1,5 @@
 package sk.jasbar.defendit.engine;
 
-
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 
@@ -9,6 +8,7 @@ import sk.jasbar.defendit.game.Blocks;
 import sk.jasbar.defendit.game.Player;
 import sk.jasbar.defendit.game.World;
 import sk.jasbar.defendit.render.BlockRenderer;
+import sk.jasbar.defendit.render.WorldRenderer;
 
 public class PlayerMovementUpdateable implements IUpdateable {
 
@@ -43,17 +43,21 @@ public class PlayerMovementUpdateable implements IUpdateable {
         if (Keyboard.isKeyDown(Keyboard.KEY_E)) {
             player.addY(CAMERA_STEP);
         }
-
+        if (Keyboard.isKeyDown(Keyboard.KEY_R)) {
+            WorldRenderer.needsRender = true;
+        }
         player.setRY(player.getCamRY() + Mouse.getDX() / 5f);
         player.setRX(player.getCamRX() - Mouse.getDY() / 5f);
 
         if (Keyboard.isKeyDown(Keyboard.KEY_ESCAPE) && !Keyboard.isRepeatEvent()) {
             Mouse.setGrabbed(!Mouse.isGrabbed());
         }
-        if(Math.round(player.getX()/BlockRenderer.BLOCK_SIZE) > 0 && Math.round(player.getX()/BlockRenderer.BLOCK_SIZE) < World.SIZE_X && Math.round(player.getY()/BlockRenderer.BLOCK_SIZE) > 0 && Math.round(player.getY()/BlockRenderer.BLOCK_SIZE)< World.SIZE_Y && Math.round(player.getZ()/BlockRenderer.BLOCK_SIZE)>0 && Math.round(player.getZ()/BlockRenderer.BLOCK_SIZE) < World.SIZE_Z)
-            player.getWorld().setBlockId(Math.round(player.getX()/BlockRenderer.BLOCK_SIZE), Math.round(player.getY()/BlockRenderer.BLOCK_SIZE), Math.round(player.getZ()/BlockRenderer.BLOCK_SIZE), Blocks.air.blockID);
-        
-        
+
+        if (Math.round(player.getX() / BlockRenderer.BLOCK_SIZE) > 0 && Math.round(player.getX() / BlockRenderer.BLOCK_SIZE) < World.SIZE_X
+                && Math.round(player.getY() / BlockRenderer.BLOCK_SIZE) > 0 && Math.round(player.getY() / BlockRenderer.BLOCK_SIZE) < World.SIZE_Y
+                && Math.round(player.getZ() / BlockRenderer.BLOCK_SIZE) > 0 && Math.round(player.getZ() / BlockRenderer.BLOCK_SIZE) < World.SIZE_Z)
+            player.getWorld().setBlockId(Math.round(player.getX() / BlockRenderer.BLOCK_SIZE), Math.round(player.getY() / BlockRenderer.BLOCK_SIZE),
+                    Math.round(player.getZ() / BlockRenderer.BLOCK_SIZE), Blocks.air.blockID);
     }
 
 }

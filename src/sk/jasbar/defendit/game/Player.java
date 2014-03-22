@@ -2,13 +2,10 @@ package sk.jasbar.defendit.game;
 
 import sk.jasbar.defendit.engine.render.ICameraCoordsProvider;
 
-public class Player implements ICameraCoordsProvider {
-    private float x, y, z;
-    private float rx, ry, rz;
-    private final World world;
+public class Player extends Entity implements ICameraCoordsProvider {
 
     public Player(World w) {
-        world = w;
+        super(w);
     }
 
     @Override
@@ -89,4 +86,7 @@ public class Player implements ICameraCoordsProvider {
         return world;
     }
 
+    @Override
+    public void tick() {
+    }
 }
