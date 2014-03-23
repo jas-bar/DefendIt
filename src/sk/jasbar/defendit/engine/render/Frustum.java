@@ -6,6 +6,8 @@ import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
 
+import org.lwjgl.BufferUtils;
+
 import sk.jasbar.defendit.render.BlockRenderer;
 import sk.jasbar.defendit.render.WorldRenderer;
 
