@@ -1,13 +1,11 @@
 package sk.jasbar.defendit.game;
 
-import java.util.HashMap;
-
 public class BlockRegistry {
-	Block[] blocks = new Block[256];
+	private final Block[] blocks = new Block[256];
 	
     public static final BlockRegistry instance = new BlockRegistry();
 
-    private final HashMap<Byte, Block> blockLookup = new HashMap<Byte, Block>();
+    //private final HashMap<Byte, Block> blockLookup = new HashMap<Byte, Block>();
     private byte lastBlockID = -1;
 
     private BlockRegistry() {

@@ -7,4 +7,6 @@ public interface ICulling {
 
     public boolean blockRenders(int blockX, int blockY, int blockZ);
 
+    public boolean chunkRenders(int cx, int cz);
+
 }

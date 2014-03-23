@@ -69,7 +69,7 @@ public class DefendItGame extends Game {
         player.setX(20 * BlockRenderer.BLOCK_SIZE);
         player.setY(World.SIZE_Y * BlockRenderer.BLOCK_SIZE);
         player.setZ(20 * BlockRenderer.BLOCK_SIZE);
-        Mouse.setGrabbed(true);
+        //Mouse.setGrabbed(true);
 
     }
 

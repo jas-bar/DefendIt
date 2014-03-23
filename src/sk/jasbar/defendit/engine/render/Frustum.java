@@ -6,8 +6,6 @@ import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
 
-import org.lwjgl.BufferUtils;
-
 import sk.jasbar.defendit.render.BlockRenderer;
 import sk.jasbar.defendit.render.WorldRenderer;
 
@@ -133,6 +131,11 @@ public class Frustum implements ICulling {
  	   frustum[plane][2] /= t;
  	   frustum[plane][3] /= t;
     	
+    }
+
+    @Override
+    public boolean chunkRenders(int cx, int cz) {
+        return false;
     }
 
 }

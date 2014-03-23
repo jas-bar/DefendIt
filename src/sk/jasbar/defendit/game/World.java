@@ -8,8 +8,11 @@ import sk.jasbar.defendit.engine.IUpdateable;
 
 public class World implements IUpdateable {
     private ArrayList<Entity> entities = new ArrayList<Entity>();
-    public static final int SIZE_X = 1024, SIZE_Y = 64, SIZE_Z = 1024;
-    private byte[][][] blocks = new byte[SIZE_X][SIZE_Y][SIZE_Z];
+    public static final int SIZE_X = 1024, SIZE_Y = 32, SIZE_Z = 1024;
+
+    private final ChunkManager chunks = new ChunkManager();
+
+    //private byte[][][] blocks = new byte[SIZE_X][SIZE_Y][SIZE_Z];
     private boolean[][][] visible = new boolean[SIZE_X][SIZE_Y][SIZE_Z];
 
     public void coordsCheck(int x, int y, int z) {
@@ -19,22 +22,24 @@ public class World implements IUpdateable {
     }
 
     public byte getBlockIdAt(int x, int y, int z) {
-        //coordsCheck(x, y, z);
-        return blocks[x][y][z];
+        return chunks.getChunkAt(x,z).getBlockID(x % Chunk.SIZE_X, y, z % Chunk.SIZE_Z);
+        // coordsCheck(x, y, z);
+        // return blocks[x][y][z];
     }
 
     public void setBlockIdNoUpdate(int x, int y, int z, byte id) {
-        //coordsCheck(x, y, z);
-        blocks[x][y][z] = (byte) (id & 0xFF);
+        // coordsCheck(x, y, z);
+        // blocks[x][y][z] = (byte) (id & 0xFF);
+        chunks.getChunk(x / Chunk.SIZE_X, z / Chunk.SIZE_Z).setBlockID(x % Chunk.SIZE_X, y, z % Chunk.SIZE_Z, id);
     }
 
     public boolean isVisible(int x, int y, int z) {
-        //coordsCheck(x, y, z);
+        // coordsCheck(x, y, z);
         return visible[x][y][z];
     }
 
     public void setVisible(int x, int y, int z, boolean vis) {
-        //coordsCheck(x, y, z);
+        // coordsCheck(x, y, z);
         visible[x][y][z] = vis;
     }
 
