@@ -4,6 +4,7 @@ import sk.jasbar.defendit.engine.render.TextureManager;
 import sk.jasbar.defendit.game.blocks.*;
 
 public class Blocks {
+    public static final int MAX_BLOCKS = 256;
     public static BlockAir air = new BlockAir();
     public static BlockStone stone;
     public static BlockDirt dirt;

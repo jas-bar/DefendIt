@@ -12,29 +12,19 @@ public class World implements IUpdateable {
     private byte[][][] blocks = new byte[SIZE_X][SIZE_Y][SIZE_Z];
     private boolean[][][] visible = new boolean[SIZE_X][SIZE_Y][SIZE_Z];
 
-    public void coordsCheck(int x, int y, int z) {
-        if (x < 0 || x >= SIZE_X || y < 0 || y >= SIZE_Y || z < 0 || z >= SIZE_Z) {
-            throw new RuntimeException("Coordinates are out of bounds [" + x + ";" + y + ";" + z + "]");
-        }
-    }
-
     public byte getBlockIdAt(int x, int y, int z) {
-        coordsCheck(x, y, z);
         return blocks[x][y][z];
     }
 
     public void setBlockIdNoUpdate(int x, int y, int z, byte id) {
-        coordsCheck(x, y, z);
         blocks[x][y][z] = (byte) (id & 0xFF);
     }
 
     public boolean isVisible(int x, int y, int z) {
-        coordsCheck(x, y, z);
         return visible[x][y][z];
     }
 
     public void setVisible(int x, int y, int z, boolean vis) {
-        coordsCheck(x, y, z);
         visible[x][y][z] = vis;
     }
 
