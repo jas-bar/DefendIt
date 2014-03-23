@@ -13,7 +13,7 @@ public class WorldGeneratorDud extends WorldGenerator {
         Random rand = new Random();
         for (int x = 0; x < World.SIZE_X; ++x) {
             for (int z = 0; z < World.SIZE_Z; ++z) {
-                for (int y = 0; y < 24; ++y) {
+                for (int y = 0; y < 60; ++y) {
                     if (rand.nextInt(2) == 0) {
                         world.setBlockIdNoUpdate(x, y, z, Blocks.stone.blockID);
                     } else {

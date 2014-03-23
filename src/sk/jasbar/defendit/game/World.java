@@ -8,7 +8,7 @@ import sk.jasbar.defendit.engine.IUpdateable;
 
 public class World implements IUpdateable {
     private ArrayList<Entity> entities = new ArrayList<Entity>();
-    public static final int SIZE_X = 1024, SIZE_Y = 32, SIZE_Z = 1024;
+    public static final int SIZE_X = 1024, SIZE_Y = 64, SIZE_Z = 1024;
     private byte[][][] blocks = new byte[SIZE_X][SIZE_Y][SIZE_Z];
     private boolean[][][] visible = new boolean[SIZE_X][SIZE_Y][SIZE_Z];
 

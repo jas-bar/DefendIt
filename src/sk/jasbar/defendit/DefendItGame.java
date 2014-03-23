@@ -56,7 +56,7 @@ public class DefendItGame extends Game {
         world = new World();
         player = new Player(world);
         world.addEntity(player);
-        cam = new AbstractCamera(player, settings.getDisplayWidth() / settings.getDisplayHeight(), 50, 0.3f, 500000f);
+        cam = new AbstractCamera(player, settings.getDisplayWidth() / settings.getDisplayHeight(), 50, 0.3f, 262144.f);
         updateables.add(new PlayerMovementUpdateable(player));
         if (settings.isShowFPS())
             updateables.add(new ShowFPS());

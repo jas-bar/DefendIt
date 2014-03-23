@@ -45,7 +45,7 @@ public class PlayerMovementUpdateable implements IUpdateable {
         }
         if (Keyboard.isKeyDown(Keyboard.KEY_R)) {
             WorldRenderer.needsRender = true;
-            System.out.println("Render pass: "+player.getCamRY());
+            //System.out.println("Render pass: "+player.getCamRY());
         }
         player.setRY(player.getCamRY() + Mouse.getDX() / 5f);
         player.setRX(player.getCamRX() - Mouse.getDY() / 5f);

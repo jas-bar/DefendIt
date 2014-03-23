@@ -16,7 +16,7 @@ public class WorldRenderer implements IRenderable {
     private final World world;
     // 1000 = far clipping plane. Dalej nema vyznam renderovat, kedze to OpenGL
     // aj tak odsekne...
-    public static final int renderDistance = (int) (200);
+    public static final int renderDistance = (int) (1000);
     private BufferedBlocksRenderer renderer;
     public static boolean needsRender = true;
     private final float FOV = 30;
@@ -37,26 +37,22 @@ public class WorldRenderer implements IRenderable {
     }
 
     private boolean blockRenders(ICameraCoordsProvider cam, int x, int y, int z) {
-        if (cam == null) {
-            return (Blocks.block(world.getBlockIdAt(x, y, z)).renders(world, x, y, z) && world.visibleTest(x, y, z));
-        } else if (cam instanceof Player) {
-            return (Blocks.block(world.getBlockIdAt(x, y, z)).renders(world, x, y, z) && world.visibleTest(x, y, z))
-                    && isBlockInFrustrum((Player) cam, x, y, z);
+         if (cam instanceof Player) {
+            return (Blocks.block(world.getBlockIdAt(x, y, z)).renders(world, x, y, z) && isBlockInFrustrum(x,y,z));
         } else {
             return false;
         }
     }
 
-    private boolean isBlockInFrustrum(Player plr, int xBlock, int yBlock, int zBlock) {
-        // z = tg (ry) * x
-        double z = plr.getZ()/BlockRenderer.BLOCK_SIZE + Math.tan(Math.toRadians(plr.getCamRY())) * zBlock;
-        double x = plr.getX()/BlockRenderer.BLOCK_SIZE + Math.tan(Math.toRadians(plr.getCamRY())) * xBlock;
-        return (z > zBlock) && (x > xBlock);
+    private boolean isBlockInFrustrum(int xBlock, int yBlock, int zBlock) {
+        return culling.blockRenders(xBlock, yBlock, zBlock);
+    	//return false;
     }
 
     @Override
     public void render(DefendItGame game, ICameraCoordsProvider cam) {
         if (needsRender) {
+        	culling.init(this);
             renderer.reset();
             needsRender = false;
             int xBegin = (int) Math.max(0, -cam.getCamX() / BlockRenderer.BLOCK_SIZE - renderDistance / 2);
