@@ -12,8 +12,7 @@ public class World implements IUpdateable {
 
     private final ChunkManager chunks = new ChunkManager();
 
-    //private byte[][][] blocks = new byte[SIZE_X][SIZE_Y][SIZE_Z];
-    private boolean[][][] visible = new boolean[SIZE_X][SIZE_Y][SIZE_Z];
+    // private byte[][][] blocks = new byte[SIZE_X][SIZE_Y][SIZE_Z];
 
     public void coordsCheck(int x, int y, int z) {
         if (x < 0 || x >= SIZE_X || y < 0 || y >= SIZE_Y || z < 0 || z >= SIZE_Z) {
@@ -22,7 +21,7 @@ public class World implements IUpdateable {
     }
 
     public byte getBlockIdAt(int x, int y, int z) {
-        return chunks.getChunkAt(x,z).getBlockID(x % Chunk.SIZE_X, y, z % Chunk.SIZE_Z);
+        return chunks.getChunkAt(x, z).getBlockID(x & 31, y, z & 31);
         // coordsCheck(x, y, z);
         // return blocks[x][y][z];
     }
@@ -30,17 +29,16 @@ public class World implements IUpdateable {
     public void setBlockIdNoUpdate(int x, int y, int z, byte id) {
         // coordsCheck(x, y, z);
         // blocks[x][y][z] = (byte) (id & 0xFF);
-        chunks.getChunk(x / Chunk.SIZE_X, z / Chunk.SIZE_Z).setBlockID(x % Chunk.SIZE_X, y, z % Chunk.SIZE_Z, id);
+        chunks.getChunkAt(x, z).setBlockID(x & 31, y, z & 31, id);
     }
 
     public boolean isVisible(int x, int y, int z) {
         // coordsCheck(x, y, z);
-        return visible[x][y][z];
+        return chunks.getChunkAt(x, z).isVisible(x & 31, y, z & 31);
     }
 
     public void setVisible(int x, int y, int z, boolean vis) {
-        // coordsCheck(x, y, z);
-        visible[x][y][z] = vis;
+        chunks.getChunkAt(x, z).setVisible(x & 31, y, z & 31, vis);
     }
 
     public void tick() {
@@ -60,7 +58,7 @@ public class World implements IUpdateable {
     }
 
     private void updateBlock(int x, int y, int z) {
-        visible[x][y][z] = blockRenders(x, y, z);
+        setVisible(x, y, z, blockRenders(x, y, z));
     }
 
     private boolean blockRenders(int x, int y, int z) {

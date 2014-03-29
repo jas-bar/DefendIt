@@ -11,6 +11,7 @@ import sk.jasbar.defendit.game.Blocks;
 import sk.jasbar.defendit.game.Chunk;
 import sk.jasbar.defendit.game.World;
 import sk.jasbar.defendit.resources.Resources;
+import sk.jasbar.defendit.util.MathHelper;
 
 public class WorldRenderer implements IRenderable {
     private final World world;
@@ -49,18 +50,18 @@ public class WorldRenderer implements IRenderable {
             culling.init(this);
             renderer.reset();
             needsRender = false;
-            int xBegin = (int) Math.max(0, -cam.getCamX() / BlockRenderer.BLOCK_SIZE - renderDistance / 2);
+            /*int xBegin = (int) Math.max(0, -cam.getCamX() / BlockRenderer.BLOCK_SIZE - renderDistance / 2);
             int yBegin = (int) Math.max(0, -cam.getCamY() / BlockRenderer.BLOCK_SIZE - renderDistance / 2);
             int zBegin = (int) Math.max(0, -cam.getCamZ() / BlockRenderer.BLOCK_SIZE - renderDistance / 2);
             int xEnd = (int) Math.min(xBegin + renderDistance, World.SIZE_X - 1);
             int yEnd = (int) Math.min(yBegin + renderDistance, World.SIZE_Y - 1);
-            int zEnd = (int) Math.min(zBegin + renderDistance, World.SIZE_Z - 1);
-            for (int cx = xBegin / Chunk.SIZE_X; cx < xEnd / Chunk.SIZE_X; cx++) {
-                for (int cz = zBegin / Chunk.SIZE_Z; cz < zEnd / Chunk.SIZE_Z; cz++) {
-                    if (culling.chunkRenders(cx, cz))
-                        for (int x = cx*Chunk.SIZE_X; x < xEnd; ++x) {
-                            for (int z = cz*Chunk.SIZE_Z; z < zEnd; ++z) {
-                                for (int y = yBegin; y < yEnd; ++y) {
+            int zEnd = (int) Math.min(zBegin + renderDistance, World.SIZE_Z - 1);*/
+            for (int cx = 0; cx < World.SIZE_X/Chunk.SIZE_X; cx++) {
+                for (int cz = 0; cz < World.SIZE_Z / Chunk.SIZE_Z; cz++) {
+                    if (MathHelper.distance2D(-cam.getCamX()/BlockRenderer.BLOCK_SIZE, -cam.getCamZ()/BlockRenderer.BLOCK_SIZE, cx*Chunk.SIZE_X, cz*Chunk.SIZE_Z) < renderDistance && culling.chunkRenders(cx, cz)){
+                        for (int x = cx*Chunk.SIZE_X; x < cx*Chunk.SIZE_X+Chunk.SIZE_X; ++x) {
+                            for (int z = cz*Chunk.SIZE_Z; z < cz*Chunk.SIZE_Z+Chunk.SIZE_Z; ++z) {
+                                for (int y = 0; y < World.SIZE_Y; ++y) {
                                     if (blockRenders(x, y, z)) {
                                         BlockRenderer blockRenderer = BlockRendererRegistry.instance.getRenderer(world.getBlockIdAt(x, y, z));
                                         blockRenderer.renderBlock(renderer, world, x, y, z);
@@ -68,6 +69,7 @@ public class WorldRenderer implements IRenderable {
                                 }
                             }
                         }
+                    }
                 }
             }
             renderer.endEdit();
